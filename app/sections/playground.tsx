@@ -1,231 +1,266 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
-import { ScrollReveal } from "../components/scroll-reveal";
-import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
-import { Play, Code, Sparkles, Info } from "lucide-react";
+import { Play, RefreshCw, AlertCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
 
-const swiftCard = `struct GlassCard: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Hello, Cartola")
-                .font(.title2.bold())
-                .foregroundStyle(.primary)
-            Text("Native iOS craft in the browser.")
-                .foregroundStyle(.secondary)
-            Button("Tap me") {}
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-        }
-        .padding(24)
-        .background(.ultraThinMaterial)
-        .cornerRadius(20)
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(.white.opacity(0.12), lineWidth: 1)
-        )
-    }
-}`;
+const Editor = dynamic(() => import("@monaco-editor/react").then((mod) => mod.default), { ssr: false });
 
-const swiftMotion = `struct PulsingDot: View {
-    @State private var scale: CGFloat = 1.0
+type DemoId = "glassCard" | "pulsingDot" | "gradientText";
 
-    var body: some View {
-        Circle()
-            .fill(Color.orange)
-            .frame(width: 24, height: 24)
-            .scaleEffect(scale)
-            .onAppear {
-                withAnimation(
-                    .easeInOut(duration: 1.5)
-                    .repeatForever(autoreverses: true)
-                ) {
-                    scale = 1.3
-                }
-            }
-    }
-}`;
+interface Demo {
+  id: DemoId;
+  label: string;
+  swiftCode: string;
+  description: string;
+}
 
-const swiftGradient = `struct DeepSpaceText: View {
-    var body: some View {
-        Text("Deep Space")
-            .font(.system(size: 40, weight: .bold))
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [.white, .orange, .blue],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-    }
-}`;
-
-const demos = [
+const demos: Demo[] = [
   {
-    id: "card",
+    id: "glassCard",
     label: "Glass Card",
-    swiftCode: swiftCard,
-    preview: (
-      <div className="w-full rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 backdrop-blur-xl dark:from-white/[0.06]">
-        <h4 className="text-lg font-semibold text-foreground">Hello, Cartola</h4>
-        <p className="mt-2 text-sm text-muted-foreground">Native iOS craft in the browser.</p>
-        <button className="mt-4 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform active:scale-95">
-          Tap me
-        </button>
-      </div>
-    ),
+    description: "SwiftUI material card with typography and a bordered button.",
+    swiftCode: `struct GlassCard: View {\n    var body: some View {\n        VStack(alignment: .leading, spacing: 12) {\n            Text("Hello, Cartola")\n                .font(.title2.bold())\n                .foregroundStyle(.primary)\n            Text("Native iOS craft in the browser.")\n                .foregroundStyle(.secondary)\n            Button("Tap me") {}\n                .buttonStyle(.borderedProminent)\n                .tint(.orange)\n        }\n        .padding(24)\n        .background(.ultraThinMaterial)\n        .cornerRadius(20)\n        .overlay(\n            RoundedRectangle(cornerRadius: 20)\n                .stroke(.white.opacity(0.12), lineWidth: 1)\n        )\n    }\n}`,
   },
   {
-    id: "animation",
+    id: "pulsingDot",
     label: "Motion",
-    swiftCode: swiftMotion,
-    preview: (
-      <div className="flex h-48 items-center justify-center gap-8">
-        <motion.div
-          className="size-6 rounded-full bg-primary"
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          className="size-4 rounded-full border-2 border-primary"
-          animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-    ),
+    description: "Implicit animation with scaleEffect and repeatForever.",
+    swiftCode: `struct PulsingDot: View {\n    @State private var scale: CGFloat = 1.0\n\n    var body: some View {\n        Circle()\n            .fill(Color.orange)\n            .frame(width: 24, height: 24)\n            .scaleEffect(scale)\n            .onAppear {\n                withAnimation(\n                    .easeInOut(duration: 1.5)\n                    .repeatForever(autoreverses: true)\n                ) {\n                    scale = 1.3\n                }\n            }\n    }\n}`,
   },
   {
-    id: "gradient",
+    id: "gradientText",
     label: "Gradient",
-    swiftCode: swiftGradient,
-    preview: (
-      <div className="flex h-48 items-center justify-center">
-        <span
-          className="bg-gradient-to-r from-foreground via-primary to-blue-500 bg-clip-text text-4xl font-bold text-transparent"
-        >
-          Deep Space
-        </span>
-      </div>
-    ),
+    description: "Linear gradient applied as a foregroundStyle mask on text.",
+    swiftCode: `struct GradientText: View {\n    var body: some View {\n        Text("Ship then polish")\n            .font(.largeTitle.bold())\n            .foregroundStyle(\n                LinearGradient(\n                    colors: [.orange, .red],\n                    startPoint: .leading,\n                    endPoint: .trailing\n                )\n            )\n    }\n}`,
   },
 ];
 
+function translateSwiftToPreview(code: string): React.ReactNode {
+  const output: React.ReactNode[] = [];
+  let key = 0;
+
+  const isText = (line: string) => /Text\("([^"]+)"\)/.test(line);
+  const textContent = (line: string) => /Text\("([^"]+)"\)/.exec(line)?.[1] ?? "";
+  const isButton = (line: string) => /Button\("([^"]+)"\)/.test(line);
+  const buttonLabel = (line: string) => /Button\("([^"]+)"\)/.exec(line)?.[1] ?? "";
+  const isCircle = (line: string) => /^\s*Circle\(\)/.test(line);
+  const isGradient = (codeStr: string) => /LinearGradient/.test(codeStr);
+  const fontClass = (line: string) => {
+    if (/font\(:?\.largeTitle/.test(line)) return "text-3xl font-bold";
+    if (/font\(:?\.title2/.test(line)) return "text-2xl font-semibold";
+    if (/font\(:?\.title/.test(line)) return "text-xl font-semibold";
+    return "text-sm";
+  };
+
+  const lines = code.split("\n");
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (/background\(:?\.ultraThinMaterial\)/.test(line)) continue;
+    if (/cornerRadius\((\d+)\)/.test(line)) continue;
+    if (/padding\((\d+)\)/.test(line)) continue;
+    if (/overlay\(/.test(line) || /RoundedRectangle/.test(line) || /stroke\(/.test(line)) continue;
+
+    if (isGradient(code)) {
+      if (isText(lines[i + 1])) {
+        output.push(
+          <span key={key++} className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent text-3xl font-bold">
+            {textContent(lines[i + 1])}
+          </span>
+        );
+      }
+      continue;
+    }
+
+    if (isText(line)) {
+      const content = textContent(line);
+      const classes = fontClass(line);
+      const secondary = /foregroundStyle\(:?\.secondary\)/.test(line);
+      const primary = /foregroundStyle\(:?\.primary\)/.test(line);
+      output.push(
+        <span
+          key={key++}
+          className={cn(classes, secondary && "text-white/60", primary && "text-white", !secondary && !primary && "text-white")}
+        >
+          {content}
+        </span>
+      );
+      continue;
+    }
+
+    if (isButton(line)) {
+      const label = buttonLabel(line);
+      const tint = /tint\(:?\.orange\)/.test(code) ? "bg-orange-500 hover:bg-orange-600" : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200";
+      output.push(
+        <motion.button
+          key={key++}
+          whileTap={{ scale: 0.96 }}
+          whileHover={{ scale: 1.02 }}
+          className={cn("mt-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors", tint)}
+        >
+          {label}
+        </motion.button>
+      );
+      continue;
+    }
+
+    if (isCircle(line)) {
+      const sizeMatch = /frame\(width:\s*(\d+),\s*height:\s*(\d+)\)/.exec(code);
+      const size = sizeMatch ? Number(sizeMatch[1]) : 24;
+      output.push(
+        <motion.div
+          key={key++}
+          className="rounded-full bg-orange-500 shadow-[0_0_24px_rgba(255,107,0,0.6)]"
+          style={{ width: size, height: size }}
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      );
+      continue;
+    }
+  }
+
+  return output;
+}
+
 export function Playground() {
-  const [activeId, setActiveId] = useState(demos[0].id);
-  const active = demos.find((d) => d.id === activeId) ?? demos[0];
+  const [activeId, setActiveId] = useState<DemoId>("glassCard");
+  const [editorCode, setEditorCode] = useState(demos[0].swiftCode);
+  const [error, setError] = useState<string | null>(null);
+
+  const activeDemo = useMemo(() => demos.find((d) => d.id === activeId) ?? demos[0], [activeId]);
+
+  useEffect(() => {
+    setEditorCode(activeDemo.swiftCode);
+    setError(null);
+  }, [activeDemo]);
+
+  const preview = useMemo(() => {
+    try {
+      const node = translateSwiftToPreview(editorCode);
+      setError(null);
+      return node;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Preview error");
+      return null;
+    }
+  }, [editorCode]);
+
+  const resetDemo = useCallback(() => {
+    setEditorCode(activeDemo.swiftCode);
+    setError(null);
+  }, [activeDemo]);
 
   return (
-    <section id="playground" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-right-32 top-[10%] opacity-25" size={500} duration={75} color="mixed" satellites={3} />
-      <OrbitPath className="-left-24 bottom-[15%] opacity-20" size={420} duration={60} color="orange" reverse satellites={2} />
-      <Planet className="absolute right-[10%] top-[20%]" size={8} color="blue" />
-      <Planet className="absolute left-[12%] bottom-[25%]" size={6} color="orange" />
-      <Constellation className="right-[8%] bottom-[30%] hidden opacity-50 lg:block" count={8} />
-
-      <div className="relative z-10 mx-auto max-w-6xl">
+    <section id="playground" className="relative overflow-hidden py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Playground"
           title="SwiftUI in the browser"
-          description="An interactive demo of how compiled SwiftUI artifacts can feel on the web. When the binary is available, this area renders the real component."
+          description="A live Monaco editor with Swift syntax highlighting. The preview is a reactive React translation — real Swift compilation needs a backend runtime such as SwiftWasm."
         />
 
-        <div className="grid gap-8 lg:grid-cols-2">
-          <ScrollReveal className="space-y-6">
-            <GlassCard glow="orange" className="h-full">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
-                  <Play className="size-5 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground">Live preview</h3>
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <GlassCard className="relative flex min-h-[420px] flex-col p-0 overflow-hidden">
+            <div className="flex items-center justify-between border-b border-white/10 bg-black/20 px-4 py-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-white/80">
+                <Play className="h-4 w-4 text-orange-500" />
+                Live preview
               </div>
-
-              <div className="mb-6 flex flex-wrap gap-2">
+              <div className="flex gap-2">
                 {demos.map((demo) => (
                   <button
                     key={demo.id}
                     onClick={() => setActiveId(demo.id)}
-                    className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
-                      active.id === demo.id
-                        ? "bg-primary text-primary-foreground"
-                        : "border border-border bg-muted/40 text-muted-foreground hover:text-foreground"
-                    }`}
+                    className={cn(
+                      "rounded-md px-3 py-1.5 text-xs font-medium transition-all",
+                      activeId === demo.id ? "bg-orange-500 text-white shadow-[0_0_12px_rgba(255,107,0,0.4)]" : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                    )}
                   >
                     {demo.label}
                   </button>
                 ))}
               </div>
+            </div>
 
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={active.id}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
-                  className="min-h-[200px] rounded-2xl border border-border bg-muted/40 p-6"
-                >
-                  {active.preview}
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
-                <Sparkles className="size-4 text-primary" />
-                <span>Demo rendering via React/Framer Motion</span>
-              </div>
-            </GlassCard>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.15} className="space-y-6">
-            <GlassCard className="h-full">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
-                  <Code className="size-5 text-primary" />
+            <div className="relative flex flex-1 items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-800/40 via-zinc-950 to-zinc-950 p-8">
+              {error ? (
+                <div className="flex items-center gap-3 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  <AlertCircle className="h-4 w-4" />
+                  {error}
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Swift source</h3>
-              </div>
+              ) : (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeId + editorCode}
+                    initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex flex-col items-center"
+                  >
+                    <div className="rounded-[20px] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md flex flex-col gap-3">
+                      {preview}
+                    </div>
+                    <p className="mt-4 max-w-xs text-center text-xs text-white/40">
+                      {activeDemo.description}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
+              )}
+            </div>
 
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.pre
-                  key={active.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-x-auto rounded-xl bg-[#0d1117] p-4 text-xs leading-relaxed text-blue-100"
-                >
-                  <code>{active.swiftCode}</code>
-                </motion.pre>
-              </AnimatePresence>
-            </GlassCard>
-          </ScrollReveal>
-        </div>
-
-        <ScrollReveal delay={0.2}>
-          <GlassCard className="mt-8">
-            <div className="flex items-start gap-4">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
-                <Info className="size-5 text-primary" />
-              </div>
-              <div>
-                <h4 className="mb-2 text-lg font-semibold text-foreground">About the integration</h4>
-                <p className="leading-relaxed text-muted-foreground">
-                  The real goal is to embed a compiled SwiftUI artifact through
-                  MSF (MiniSwift) or a compatible WebAssembly runtime. Until that
-                  binary artifact is available, this playground mirrors the same
-                  components in React/Framer Motion so the experience stays polished
-                  and the integration point stays clear.
-                </p>
-                <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
-                  <Play className="size-4 text-primary" />
-                  <span>Next step: plug the compiled .wasm artifact into the preview panel.</span>
-                </div>
-              </div>
+            <div className="border-t border-white/10 px-4 py-2 text-[10px] text-white/30">
+              React preview · Swift compiler integration via SwiftWasm planned
             </div>
           </GlassCard>
-        </ScrollReveal>
+
+          <GlassCard className="relative flex min-h-[420px] flex-col p-0 overflow-hidden">
+            <div className="flex items-center justify-between border-b border-white/10 bg-black/20 px-4 py-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-white/80">
+                <span className="font-mono text-xs text-orange-500">.swift</span>
+                Source
+              </div>
+              <button
+                onClick={resetDemo}
+                className="flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                <RefreshCw className="h-3 w-3" />
+                Reset
+              </button>
+            </div>
+
+            <div className="flex-1 bg-[#0d1117]">
+              <Editor
+                height="100%"
+                language="swift"
+                theme="vs-dark"
+                value={editorCode}
+                onChange={(value) => setEditorCode(value ?? "")}
+                options={{
+                  minimap: { enabled: false },
+                  fontSize: 13,
+                  lineNumbers: "on",
+                  roundedSelection: false,
+                  scrollBeyondLastLine: false,
+                  automaticLayout: true,
+                  padding: { top: 16 },
+                  fontFamily: "JetBrains Mono, ui-monospace, monospace",
+                }}
+              />
+            </div>
+          </GlassCard>
+        </div>
+
+        <p className="mt-6 text-center text-xs text-white/40">
+          Editing the source updates the preview immediately. A real Swift compiler in the browser
+          requires SwiftWasm + a backend endpoint — that is the next engineering milestone.
+        </p>
       </div>
     </section>
   );
