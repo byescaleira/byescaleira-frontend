@@ -10,6 +10,35 @@ import dynamic from "next/dynamic";
 
 const Editor = dynamic(() => import("@monaco-editor/react").then((mod) => mod.default), { ssr: false });
 
+// Custom Monaco theme matching the site palette
+const defineByescaleiraTheme = (monaco: typeof import("monaco-editor")) => {
+  monaco.editor.defineTheme("byescaleira", {
+    base: "vs-dark",
+    inherit: true,
+    rules: [
+      { token: "comment", foreground: "6B7280", fontStyle: "italic" },
+      { token: "keyword", foreground: "FF8C42" },
+      { token: "string", foreground: "93C5FD" },
+      { token: "number", foreground: "A78BFA" },
+      { token: "type", foreground: "FDBA74" },
+      { token: "identifier", foreground: "F8FAFC" },
+      { token: "function", foreground: "FB923C" },
+      { token: "operator", foreground: "FF6B00" },
+    ],
+    colors: {
+      "editor.background": "0B0F19",
+      "editor.lineHighlightBackground": "111827",
+      "editorLineNumber.foreground": "6B7280",
+      "editorLineNumber.activeForeground": "FF6B00",
+      "editor.selectionBackground": "FF6B0033",
+      "editor.inactiveSelectionBackground": "FF6B0022",
+      "editorCursor.foreground": "FF6B00",
+      "editorBracketMatch.background": "FF6B0022",
+      "editorBracketMatch.border": "FF6B00",
+    },
+  });
+};
+
 type DemoId = "glassCard" | "pulsingDot" | "gradientText";
 
 interface Demo {
@@ -239,9 +268,10 @@ export function Playground() {
               <Editor
                 height="100%"
                 language="swift"
-                theme="vs-dark"
+                theme="byescaleira"
                 value={editorCode}
                 onChange={(value) => setEditorCode(value ?? "")}
+                beforeMount={defineByescaleiraTheme}
                 options={{
                   minimap: { enabled: false },
                   fontSize: 13,
