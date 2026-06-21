@@ -1,8 +1,8 @@
 # byescaleira-frontend
 
-Personal website for [Rafael Escaleira](https://github.com/byescaleira) — iOS Specialist at Globo, working on Cartola FC.
+> Personal portfolio of Rafael Escaleira — iOS Specialist shipping native apps with Swift, SwiftUI, and a lot of coffee.
 
-Live at **https://byescaleira-frontend.vercel.app** (deployed on Vercel).
+Live at **https://byescaleira-frontend.vercel.app**.
 
 ## What it is
 
@@ -13,69 +13,53 @@ A single-page portfolio built to feel like a native Apple experience on the web:
 - Real profile content and career history
 - Interactive SwiftUI-in-the-browser Playground demo
 - Fully responsive from mobile to desktop
+- Light, dark, and system theme support
 
 ## Built with
 
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS 4
-- **UI:** shadcn/ui (base-nova)
+- **Styling:** Tailwind CSS v4
+- **UI:** shadcn/ui
 - **Motion:** Framer Motion
-- **Icons:** Lucide + inline SVGs
-- **Fonts:** DM Sans, Space Grotesk, JetBrains Mono
+- **Deployment:** Vercel
 
-## Design workflow
+## Structure
 
-This site was designed with the help of **UI/UX Pro Max** and **Framer Motion**, installed via the [website-builder-setup](https://github.com/tenfoldmarc/website-builder-setup) skill for Claude Code.
+- `app/` — Next.js App Router pages and components
+- `app/sections/` — page sections (Hero, About, Skills, Work, Projects, Playground, Contact)
+- `app/components/` — shared components, animations, and detail layouts
+- `lib/content.ts` — source of truth for experiences and projects
+- `public/` — static assets
 
-The design system was generated with:
+## Pages
+
+- `/` — portfolio homepage
+- `/experience/[slug]` — dedicated experience pages
+- `/project/[slug]` — dedicated project pages
+
+## Quick start
 
 ```bash
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py \
-  "personal portfolio ios specialist dark mode liquid glass apple premium animations" \
-  --design-system -p "byescaleira" -f markdown --persist
-```
-
-## Local development
-
-```bash
+git clone git@github.com:byescaleira/byescaleira-frontend.git
+cd byescaleira-frontend
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+## Documentation
 
-## Build
+- [CLAUDE.md](./CLAUDE.md) — project brief and iteration context
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — how the site is built
+- [DECISIONS.md](./DECISIONS.md) — important technical choices
+- [CHANGELOG.md](./CHANGELOG.md) — release history
 
-```bash
-npm run build
-```
+## License
 
-Static export is enabled via `output: 'export'` in `next.config.ts`. The build must pass with zero errors before deploying.
-
-## Deploy
-
-```bash
-vercel --prod
-```
-
-## Project structure
-
-```
-app/
-  components/     # Reusable UI primitives (Header, Footer, GlassCard, ScrollReveal, etc.)
-  sections/       # Hero, About, Skills, Work, Projects, Playground, Contact
-  globals.css     # Deep Space + Liquid Glass design tokens
-  layout.tsx      # Fonts and metadata
-  page.tsx        # Landing page composition
-public/           # Static assets
-.claude/          # Claude Code skills (UI/UX Pro Max, Framer Motion)
-```
-
-## SwiftUI Playground note
-
-The Playground simulates SwiftUI components in React. The production vision is to embed a compiled Swift-to-WASM artifact from MSF / MiniSwift and render the real canvas inside the same container.
+MIT © Rafael Escaleira
 
 ---
 
-Built by Rafael Escaleira · [@byescaleira](https://x.com/byescaleira)
+Built by [Rafael Escaleira](https://byescaleira.com) · [@byescaleira](https://x.com/byescaleira)
+
+If something here helped you, let me know. If something is wrong, tell me louder.

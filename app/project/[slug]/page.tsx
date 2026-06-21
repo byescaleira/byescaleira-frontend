@@ -6,14 +6,14 @@ import {
 } from "@/lib/content";
 import { DetailLayout } from "../../components/detail-layout";
 import { GlassCard } from "../../components/glass-card";
-import { Target, Lightbulb, GitBranch, ExternalLink, Layers } from "lucide-react";
+import { Target, Lightbulb, ExternalLink, Layers } from "lucide-react";
 
 export function generateStaticParams() {
   return getAllProjectSlugs().map((slug) => ({ slug }));
 }
 
 interface ProjectPageProps {
-  params: Promise<{ slug: string } >;
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: ProjectPageProps) {
@@ -42,18 +42,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-1">
           <GlassCard>
-            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-orbit">
-              <Layers className="size-4" />
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+              <Layers className="size-4 text-primary" />
               Status
             </h2>
-            <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-sm text-starlight">
+            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-sm text-foreground">
               {project.status}
             </span>
             <div className="mt-4 flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs text-orbit"
+                  className="rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground"
                 >
                   {tag}
                 </span>
@@ -62,12 +62,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </GlassCard>
 
           {project.link && (
-            <GlassCard glow="blue">
+            <GlassCard glow="orange">
               <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-nebula transition-colors hover:text-nebula-glow"
+                className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-pulsar"
               >
                 <ExternalLink className="size-4" />
                 Open project
@@ -78,29 +78,29 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <div className="space-y-6 lg:col-span-2">
           <GlassCard>
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-starlight">
-              <Target className="size-5 text-nebula" />
+            <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
+              <Target className="size-5 text-primary" />
               Goals
             </h2>
             <ul className="space-y-3">
               {project.goals.map((goal) => (
-                <li key={goal} className="flex items-start gap-3 text-orbit">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-nebula" />
+                <li key={goal} className="flex items-start gap-3 text-muted-foreground">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
                   {goal}
                 </li>
               ))}
             </ul>
           </GlassCard>
 
-          <GlassCard glow="teal">
-            <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-starlight">
-              <Lightbulb className="size-5 text-cosmos" />
+          <GlassCard glow="orange">
+            <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
+              <Lightbulb className="size-5 text-primary" />
               Learnings
             </h2>
             <ul className="space-y-3">
               {project.learnings.map((learning) => (
-                <li key={learning} className="flex items-start gap-3 text-orbit">
-                  <Lightbulb className="mt-0.5 size-4 shrink-0 text-cosmos" />
+                <li key={learning} className="flex items-start gap-3 text-muted-foreground">
+                  <Lightbulb className="mt-0.5 size-4 shrink-0 text-primary" />
                   {learning}
                 </li>
               ))}

@@ -6,6 +6,7 @@ import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { IphoneMockup } from "../components/iphone-mockup";
 import { SatelliteStrip } from "../components/orbit-decoration";
+import { CodeStrip } from "../components/code-strip";
 import {
   Smartphone,
   Layers,
@@ -108,6 +109,13 @@ export function Skills() {
         screen="gradient"
         float={false}
       />
+      <IphoneMockup
+        className="left-[2%] bottom-20 z-0 hidden opacity-30 xl:block"
+        size="sm"
+        screen="code"
+        float
+      />
+      <CodeStrip className="top-[55%] right-0 z-0 hidden opacity-25 xl:block" reverse />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
@@ -129,11 +137,11 @@ export function Skills() {
             return (
               <motion.div key={skill.title} variants={item}>
                 <GlassCard hover className="h-full">
-                  <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-nebula/10">
-                    <Icon className="size-5 text-nebula" />
+                  <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-primary/10">
+                    <Icon className="size-5 text-primary" />
                   </div>
-                  <h3 className="mb-2 text-lg font-semibold text-starlight">{skill.title}</h3>
-                  <p className="text-sm leading-relaxed text-orbit">{skill.description}</p>
+                  <h3 className="mb-2 text-lg font-semibold text-foreground">{skill.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
                 </GlassCard>
               </motion.div>
             );

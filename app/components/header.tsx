@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { GithubIcon, LinkedinIcon } from "./icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "./icons";
+import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -33,12 +34,12 @@ export function Header() {
       <div
         className={`mx-4 rounded-2xl px-4 py-3 transition-all duration-300 md:mx-8 md:px-6 ${
           scrolled
-            ? "glass-strong shadow-2xl shadow-black/40"
+            ? "glass-strong shadow-2xl shadow-black/20"
             : "bg-transparent"
         }`}
       >
         <div className="flex items-center justify-between">
-          <a href="/" className="text-lg font-semibold tracking-tight text-starlight">
+          <a href="/" className="text-lg font-semibold tracking-tight text-foreground hover:text-primary transition-colors">
             byescaleira
           </a>
 
@@ -47,19 +48,19 @@ export function Header() {
               <a
                 key={item.href}
                 href={isHome ? item.href : `/${item.href}`}
-                className="rounded-lg px-3 py-2 text-sm text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
+                className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 {item.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden items-center gap-2 md:flex">
+          <div className="hidden items-center gap-1 md:flex">
             <a
               href="https://github.com/byescaleira"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg p-2 text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label="GitHub"
             >
               <GithubIcon className="size-5" />
@@ -68,11 +69,23 @@ export function Header() {
               href="https://www.linkedin.com/in/rafael-eescaleira"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg p-2 text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               aria-label="LinkedIn"
             >
               <LinkedinIcon className="size-5" />
             </a>
+            <a
+              href="https://x.com/byescaleira"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              aria-label="X/Twitter"
+            >
+              <XIcon className="size-5" />
+            </a>
+            <div className="ml-1">
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Spacer for visual balance on mobile */}

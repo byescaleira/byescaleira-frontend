@@ -7,7 +7,7 @@ interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
-  glow?: "blue" | "amber" | "teal" | "none";
+  glow?: "blue" | "amber" | "teal" | "orange" | "none";
 }
 
 export function GlassCard({
@@ -21,10 +21,11 @@ export function GlassCard({
       className={cn(
         "group relative overflow-hidden rounded-2xl p-6 transition-all duration-300",
         "liquid-glass",
-        hover && "hover:bg-white/[0.07] hover:shadow-[0_0_40px_-12px_rgba(59,130,246,0.2)]",
+        hover && "hover:bg-muted/50 hover:shadow-[0_0_40px_-12px_var(--pulsar)]",
         glow === "blue" && "glow-blue",
         glow === "amber" && "glow-amber",
         glow === "teal" && "glow-teal",
+        glow === "orange" && "glow-orange",
         className
       )}
       whileHover={hover ? { y: -4, scale: 1.01 } : undefined}

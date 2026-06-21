@@ -6,6 +6,7 @@ import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { IphoneMockup } from "../components/iphone-mockup";
+import { CodeStrip } from "../components/code-strip";
 import { Play, Code, Sparkles, Smartphone, Info } from "lucide-react";
 
 const demos = [
@@ -22,6 +23,7 @@ const demos = [
                 .foregroundStyle(.secondary)
             Button("Tap me") {}
                 .buttonStyle(.borderedProminent)
+                .tint(.orange)
         }
         .padding(24)
         .background(.ultraThinMaterial)
@@ -34,9 +36,9 @@ const demos = [
 }`,
     preview: (
       <div className="w-full rounded-2xl bg-white/5 p-6 backdrop-blur-xl">
-        <h4 className="text-lg font-semibold text-starlight">Hello, Cartola</h4>
-        <p className="mt-2 text-sm text-orbit">Native iOS craft in the browser.</p>
-        <button className="mt-4 rounded-full bg-nebula px-4 py-2 text-sm font-medium text-white">
+        <h4 className="text-lg font-semibold text-foreground">Hello, Cartola</h4>
+        <p className="mt-2 text-sm text-muted-foreground">Native iOS craft in the browser.</p>
+        <button className="mt-4 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
           Tap me
         </button>
       </div>
@@ -50,7 +52,7 @@ const demos = [
 
     var body: some View {
         Circle()
-            .fill(Color.cyan)
+            .fill(Color.orange)
             .frame(width: 24, height: 24)
             .scaleEffect(scale)
             .onAppear {
@@ -66,7 +68,7 @@ const demos = [
     preview: (
       <div className="flex h-48 items-center justify-center">
         <motion.div
-          className="size-6 rounded-full bg-cosmos"
+          className="size-6 rounded-full bg-primary"
           animate={{ scale: [1, 1.3, 1] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -82,7 +84,7 @@ const demos = [
             .font(.system(size: 40, weight: .bold))
             .foregroundStyle(
                 LinearGradient(
-                    colors: [.white, .blue, .teal],
+                    colors: [.white, .orange, .blue],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
@@ -91,7 +93,7 @@ const demos = [
 }`,
     preview: (
       <div className="flex h-48 items-center justify-center">
-        <span className="text-4xl font-bold text-gradient">Deep Space</span>
+        <span className="text-gradient text-4xl font-bold">Deep Space</span>
       </div>
     ),
   },
@@ -108,22 +110,29 @@ export function Playground() {
         screen="swiftui"
         float={false}
       />
+      <IphoneMockup
+        className="left-4 bottom-20 z-0 hidden opacity-25 lg:block"
+        size="sm"
+        screen="code"
+        float
+      />
+      <CodeStrip className="top-[5%] left-0 z-0 hidden opacity-20 xl:block" reverse />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Playground"
           title="SwiftUI in the browser"
-          description="An interactive demo of how MSF / MiniSwift (tokentradez fork) can bring compiled SwiftUI artifacts to the web. When the binary is available, this area renders the real component."
+          description="An interactive demo of how MSF / MiniSwift can bring compiled SwiftUI artifacts to the web. When the binary is available, this area renders the real component."
         />
 
         <div className="grid gap-8 lg:grid-cols-2">
           <ScrollReveal className="space-y-6">
-            <GlassCard glow="teal" className="h-full">
+            <GlassCard glow="orange" className="h-full">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-cosmos/10">
-                  <Smartphone className="size-5 text-cosmos" />
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Smartphone className="size-5 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-starlight">Live preview</h3>
+                <h3 className="text-xl font-semibold text-foreground">Live preview</h3>
               </div>
 
               <div className="mb-6 flex flex-wrap gap-2">
@@ -133,8 +142,8 @@ export function Playground() {
                     onClick={() => setActive(demo)}
                     className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
                       active.id === demo.id
-                        ? "bg-cosmos text-void"
-                        : "border border-white/10 bg-white/[0.03] text-orbit hover:text-starlight"
+                        ? "bg-primary text-primary-foreground"
+                        : "border border-border bg-muted/40 text-muted-foreground hover:text-foreground"
                     }`}
                   >
                     {demo.label}
@@ -149,14 +158,14 @@ export function Playground() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.98 }}
                   transition={{ duration: 0.25 }}
-                  className="min-h-[200px] rounded-2xl border border-white/10 bg-void-light/50 p-6"
+                  className="min-h-[200px] rounded-2xl border border-border bg-muted/40 p-6"
                 >
                   {active.preview}
                 </motion.div>
               </AnimatePresence>
 
-              <div className="mt-4 flex items-center gap-2 text-xs text-orbit">
-                <Sparkles className="size-4 text-cosmos" />
+              <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+                <Sparkles className="size-4 text-primary" />
                 <span>Demo rendering via React/Framer Motion</span>
               </div>
             </GlassCard>
@@ -165,10 +174,10 @@ export function Playground() {
           <ScrollReveal delay={0.15} className="space-y-6">
             <GlassCard className="h-full">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-nebula/10">
-                  <Code className="size-5 text-nebula" />
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Code className="size-5 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-starlight">Swift source</h3>
+                <h3 className="text-xl font-semibold text-foreground">Swift source</h3>
               </div>
 
               <AnimatePresence mode="wait">
@@ -190,21 +199,20 @@ export function Playground() {
         <ScrollReveal delay={0.2}>
           <GlassCard className="mt-8">
             <div className="flex items-start gap-4">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-supernova/10">
-                <Info className="size-5 text-supernova" />
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                <Info className="size-5 text-primary" />
               </div>
               <div>
-                <h4 className="mb-2 text-lg font-semibold text-starlight">About the integration</h4>
-                <p className="leading-relaxed text-orbit">
+                <h4 className="mb-2 text-lg font-semibold text-foreground">About the integration</h4>
+                <p className="leading-relaxed text-muted-foreground">
                   The real goal is to embed a compiled SwiftUI artifact through
-                  MSF (MiniSwift) or a compatible WebAssembly runtime such as
-                  the tokentradez fork. Until that binary artifact is available,
-                  this playground mirrors the same components in React/Framer
-                  Motion so the experience stays polished and the integration
-                  point stays clear.
+                  MSF (MiniSwift) or a compatible WebAssembly runtime. Until that
+                  binary artifact is available, this playground mirrors the same
+                  components in React/Framer Motion so the experience stays polished
+                  and the integration point stays clear.
                 </p>
-                <div className="mt-4 flex items-center gap-2 text-sm text-orbit">
-                  <Play className="size-4 text-nebula" />
+                <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+                  <Play className="size-4 text-primary" />
                   <span>Next step: plug the compiled .wasm artifact into the preview panel.</span>
                 </div>
               </div>

@@ -23,12 +23,12 @@ export function OrbitDecoration({
       className={cn("pointer-events-none absolute select-none", className)}
       aria-hidden="true"
     >
-      <svg viewBox="0 0 400 400" className="h-full w-full opacity-30">
+      <svg viewBox="0 0 400 400" className="h-full w-full opacity-40">
         <defs>
           <linearGradient id="orbitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(59,130,246,0.5)" />
-            <stop offset="50%" stopColor="rgba(20,184,166,0.35)" />
-            <stop offset="100%" stopColor="rgba(59,130,246,0.05)" />
+            <stop offset="0%" stopColor="rgba(255,107,0,0.5)" />
+            <stop offset="50%" stopColor="rgba(255,140,0,0.35)" />
+            <stop offset="100%" stopColor="rgba(255,107,0,0.05)" />
           </linearGradient>
         </defs>
         <circle
@@ -45,7 +45,7 @@ export function OrbitDecoration({
           cy="200"
           r="120"
           fill="none"
-          stroke="rgba(248,250,252,0.08)"
+          stroke="rgba(148,163,184,0.12)"
           strokeWidth="1"
         />
         <circle
@@ -53,7 +53,7 @@ export function OrbitDecoration({
           cy="200"
           r="80"
           fill="none"
-          stroke="rgba(59,130,246,0.2)"
+          stroke="rgba(255,107,0,0.25)"
           strokeWidth="1"
           strokeDasharray="4 12"
         />
@@ -64,8 +64,8 @@ export function OrbitDecoration({
           const y = 200 + Math.sin(angle) * r;
           return (
             <g key={i}>
-              <circle cx={x} cy={y} r="6" fill="rgba(59,130,246,0.25)" />
-              <circle cx={x} cy={y} r="3" fill="rgba(248,250,252,0.8)" />
+              <circle cx={x} cy={y} r="6" fill="rgba(255,107,0,0.35)" />
+              <circle cx={x} cy={y} r="3" fill="rgba(248,250,252,0.9)" />
             </g>
           );
         })}
@@ -87,7 +87,7 @@ export function SatelliteStrip({ className, reverse = false }: { className?: str
             ease: "easeInOut",
             delay: i * 0.4,
           }}
-          className="size-2 rounded-full bg-nebula/40 shadow-[0_0_12px_rgba(59,130,246,0.5)]"
+          className="size-2 rounded-full bg-primary/40 shadow-[0_0_12px_var(--pulsar)]"
         />
       ))}
     </div>

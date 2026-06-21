@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
+import { IphoneMockup } from "../components/iphone-mockup";
 import { ExternalLink } from "lucide-react";
 import { Orbit, Wallet, Code, Hexagon } from "lucide-react";
 
@@ -68,8 +69,11 @@ export function PersonalProjects() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="relative px-6 py-24 md:px-12 md:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="projects" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
+      <IphoneMockup className="left-[2%] top-[8%] z-0 hidden opacity-30 xl:block" size="sm" screen="code" />
+      <IphoneMockup className="right-[3%] bottom-[10%] z-0 hidden opacity-30 xl:block" size="sm" screen="swiftui" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Personal Projects"
           title="Side missions"
@@ -91,36 +95,36 @@ export function PersonalProjects() {
                 <a href={`/project/${project.slug}/`}>
                   <GlassCard hover className="group h-full">
                     <div className="mb-4 flex items-start justify-between">
-                      <div className="flex size-12 items-center justify-center rounded-2xl bg-nebula/10 transition-colors group-hover:bg-nebula/20">
-                        <Icon className="size-6 text-nebula" />
+                      <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+                        <Icon className="size-6 text-primary" />
                       </div>
-                      <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit">
+                      <span className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground">
                         {project.status}
                       </span>
                     </div>
 
                     <div className="mb-2 flex items-baseline gap-2">
-                      <span className="text-sm font-medium text-nebula">{project.codename}</span>
+                      <span className="text-sm font-medium text-primary">{project.codename}</span>
                       <div className="flex items-center gap-1">
-                        <h3 className="text-xl font-semibold text-starlight">{project.title}</h3>
-                        <ExternalLink className="size-4 text-orbit opacity-0 transition-opacity group-hover:opacity-100" />
+                        <h3 className="text-xl font-semibold text-foreground">{project.title}</h3>
+                        <ExternalLink className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                       </div>
                     </div>
 
-                    <p className="mb-5 leading-relaxed text-orbit">{project.description}</p>
+                    <p className="mb-5 leading-relaxed text-muted-foreground">{project.description}</p>
 
                     <div className="mb-5 flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit"
+                          className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <span className="inline-flex items-center gap-2 text-sm font-medium text-nebula transition-colors group-hover:text-nebula-glow">
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors group-hover:text-pulsar">
                       Read more
                       <ExternalLink className="size-4" />
                     </span>

@@ -32,54 +32,6 @@ function createStars(count: number, width: number, height: number): Star[] {
   return stars;
 }
 
-function drawShootingStar(
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  progress: number
-) {
-  // progress loops 0..1 over ~18s
-  const startX = -120;
-  const endX = width + 120;
-  const startY = height * 0.22;
-  const endY = height * 0.34;
-  const x = startX + (endX - startX) * progress;
-  const y = startY + (endY - startY) * progress;
-
-  // Fade in then out
-  let alpha = 0;
-  if (progress < 0.15) alpha = progress / 0.15;
-  else if (progress > 0.7) alpha = 1 - (progress - 0.7) / 0.3;
-  else alpha = 1;
-
-  if (alpha <= 0) return;
-
-  const tail = 140;
-  const gradient = ctx.createLinearGradient(x - tail, y, x, y);
-  gradient.addColorStop(0, `rgba(59, 130, 246, 0)`);
-  gradient.addColorStop(0.5, `rgba(59, 130, 246, ${0.25 * alpha})`);
-  gradient.addColorStop(1, `rgba(248, 250, 252, ${alpha})`);
-
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.rotate((endY - startY) / (endX - startX));
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(-tail, 0);
-  ctx.strokeStyle = gradient;
-  ctx.lineWidth = 2;
-  ctx.lineCap = "round";
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(0, 0, 2.2, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(248, 250, 252, ${alpha})`;
-  ctx.shadowColor = "rgba(59, 130, 246, 0.9)";
-  ctx.shadowBlur = 12;
-  ctx.fill();
-  ctx.restore();
-}
-
 export function StarField({ count = 220 }: { count?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Star[]>([]);
@@ -125,7 +77,7 @@ export function StarField({ count = 220 }: { count?: number }) {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Deep space nebula gradients
+      // Deep space nebula gradients — adapt to orange/blue palette
       const nebula = ctx.createRadialGradient(
         width * 0.25,
         height * 0.25,
@@ -134,8 +86,8 @@ export function StarField({ count = 220 }: { count?: number }) {
         height * 0.25,
         width * 0.7
       );
-      nebula.addColorStop(0, "rgba(59, 130, 246, 0.18)");
-      nebula.addColorStop(0.4, "rgba(59, 130, 246, 0.05)");
+      nebula.addColorStop(0, "rgba(255, 107, 0, 0.16)");
+      nebula.addColorStop(0.4, "rgba(255, 107, 0, 0.05)");
       nebula.addColorStop(1, "transparent");
       ctx.fillStyle = nebula;
       ctx.fillRect(0, 0, width, height);
@@ -148,8 +100,8 @@ export function StarField({ count = 220 }: { count?: number }) {
         height * 0.82,
         width * 0.65
       );
-      cosmos.addColorStop(0, "rgba(20, 184, 166, 0.12)");
-      cosmos.addColorStop(0.45, "rgba(20, 184, 166, 0.04)");
+      cosmos.addColorStop(0, "rgba(59, 130, 246, 0.12)");
+      cosmos.addColorStop(0.45, "rgba(59, 130, 246, 0.04)");
       cosmos.addColorStop(1, "transparent");
       ctx.fillStyle = cosmos;
       ctx.fillRect(0, 0, width, height);
@@ -168,11 +120,6 @@ export function StarField({ count = 220 }: { count?: number }) {
         ctx.fillStyle = `rgba(248, 250, 252, ${star.opacity})`;
         ctx.fill();
       });
-
-      // Shooting star loops every ~18 seconds
-      const shootingDuration = 18;
-      const shootingProgress = (elapsed % shootingDuration) / shootingDuration;
-      drawShootingStar(ctx, width, height, shootingProgress);
 
       rafRef.current = requestAnimationFrame(draw);
     };

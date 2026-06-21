@@ -15,15 +15,15 @@ const screens = {
   swiftui: (
     <div className="flex h-full flex-col gap-3 p-4">
       <div className="flex items-center gap-2">
-        <div className="size-7 rounded-full bg-nebula/20" />
+        <div className="size-7 rounded-full bg-primary/30" />
         <div className="h-2 w-20 rounded bg-white/10" />
       </div>
-      <div className="mt-2 h-28 rounded-2xl bg-gradient-to-br from-nebula/30 to-cosmos/20 p-3">
+      <div className="mt-2 h-28 rounded-2xl bg-gradient-to-br from-primary/40 to-primary/30 p-3">
         <div className="h-2 w-16 rounded bg-white/20" />
         <div className="mt-2 h-2 w-24 rounded bg-white/10" />
         <div className="mt-4 flex gap-2">
-          <div className="h-8 flex-1 rounded-xl bg-white/10" />
-          <div className="h-8 flex-1 rounded-xl bg-white/10" />
+          <div className="h-8 flex-1 rounded-xl bg-white/15" />
+          <div className="h-8 flex-1 rounded-xl bg-white/15" />
         </div>
       </div>
       <div className="space-y-2">
@@ -32,14 +32,14 @@ const screens = {
         <div className="h-2 w-4/6 rounded bg-white/10" />
       </div>
       <div className="mt-auto flex justify-center gap-4">
-        <div className="size-10 rounded-full bg-nebula/20" />
-        <div className="size-10 rounded-full bg-cosmos/20" />
-        <div className="size-10 rounded-full bg-supernova/20" />
+        <div className="size-10 rounded-full bg-primary/30" />
+        <div className="size-10 rounded-full bg-primary/30" />
+        <div className="size-10 rounded-full bg-pulsar/30" />
       </div>
     </div>
   ),
   code: (
-    <div className="flex h-full flex-col p-4 font-mono text-[10px] leading-relaxed text-blue-100/80">
+    <div className="flex h-full flex-col p-4 font-mono text-[10px] leading-relaxed text-blue-100/90">
       <span className="text-purple-300">struct</span>{" "}
       <span className="text-yellow-200">CartolaView</span>:{" "}
       <span className="text-yellow-200">View</span>{" "}
@@ -76,9 +76,9 @@ const screens = {
   ),
   gradient: (
     <div className="flex h-full flex-col items-center justify-center gap-3 p-4">
-      <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-nebula via-nebula-glow to-cosmos shadow-lg shadow-nebula/30" />
-      <div className="text-center text-sm font-medium text-starlight">Deep Space</div>
-      <div className="text-xs text-orbit">Liquid Glass</div>
+      <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary via-pulsar to-primary/70 shadow-lg shadow-primary/30" />
+      <div className="text-center text-sm font-medium text-foreground">Deep Space</div>
+      <div className="text-xs text-muted-foreground">Liquid Glass</div>
     </div>
   ),
 };
@@ -112,8 +112,8 @@ export function IphoneMockup({
         animate={
           float
             ? {
-                y: [0, -12, 0],
-                rotate: [0, 1, -1, 0],
+                y: [0, -16, 0],
+                rotate: [0, 1.5, -1.5, 0],
               }
             : undefined
         }
@@ -121,9 +121,9 @@ export function IphoneMockup({
         className="relative"
       >
         {/* Frame */}
-        <div className="relative overflow-hidden rounded-[2.4rem] border-[6px] border-white/10 bg-void p-1 shadow-2xl shadow-black/50">
+        <div className="relative overflow-hidden rounded-[2.4rem] border-[6px] border-border bg-background p-1 shadow-2xl shadow-black/50">
           <div className="absolute top-0 left-1/2 z-10 h-5 w-24 -translate-x-1/2 rounded-b-xl bg-black/40" />
-          <div className="aspect-[9/19.5] overflow-hidden rounded-[1.8rem] border border-white/5 bg-void-light">
+          <div className="aspect-[9/19.5] overflow-hidden rounded-[1.8rem] border border-white/5 bg-[hsl(var(--card))]">
             {screens[screen]}
           </div>
         </div>

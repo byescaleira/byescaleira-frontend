@@ -31,7 +31,7 @@ export function SectionHeading({
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.5 }}
-          className="mb-3 inline-block text-xs font-medium uppercase tracking-[0.2em] text-nebula"
+          className="mb-3 inline-block text-xs font-medium uppercase tracking-[0.2em] text-primary"
         >
           {eyebrow}
         </motion.span>
@@ -40,7 +40,7 @@ export function SectionHeading({
         initial={{ opacity: 0, y: 16 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="font-heading text-3xl font-semibold tracking-tight text-starlight md:text-4xl lg:text-5xl"
+        className="font-heading text-3xl font-semibold tracking-tight text-foreground md:text-4xl lg:text-5xl"
       >
         {title}
       </motion.h2>
@@ -49,7 +49,7 @@ export function SectionHeading({
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className={`mt-4 max-w-2xl text-lg leading-relaxed text-orbit ${
+          className={`mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground ${
             align === "center" ? "mx-auto" : ""
           }`}
         >

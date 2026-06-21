@@ -44,7 +44,7 @@ export function MobileTabBar() {
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="liquid-glass flex items-center justify-between rounded-[2rem] px-2 py-2 shadow-2xl shadow-black/50"
+        className="liquid-glass flex items-center justify-between rounded-[2rem] px-2 py-2 shadow-2xl shadow-black/30"
       >
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -55,19 +55,21 @@ export function MobileTabBar() {
               href={tab.href}
               className={cn(
                 "group relative flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 transition-colors",
-                isActive ? "text-starlight" : "text-orbit hover:text-starlight"
+                isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
               )}
               aria-current={isActive ? "page" : undefined}
             >
               {isActive && (
                 <motion.div
                   layoutId="mobileTabPill"
-                  className="absolute inset-0 rounded-2xl bg-white/10"
+                  className="absolute inset-0 rounded-2xl bg-primary/15"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              <Icon className="relative z-10 size-5" />
-              <span className="relative z-10 text-[10px] font-medium">{tab.label}</span>
+              <Icon className={cn("relative z-10 size-5", isActive && "text-primary")} />
+              <span className={cn("relative z-10 text-[10px] font-medium", isActive && "text-foreground")}>
+                {tab.label}
+              </span>
             </a>
           );
         })}

@@ -4,6 +4,8 @@ import { ScrollReveal } from "../components/scroll-reveal";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { OrbitDecoration } from "../components/orbit-decoration";
+import { IphoneMockup } from "../components/iphone-mockup";
+import { CodeStrip } from "../components/code-strip";
 import {
   Rocket,
   BrainCircuit,
@@ -77,6 +79,8 @@ export function About() {
       className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32"
     >
       <OrbitDecoration className="-right-32 top-24 h-80 w-80 opacity-20 md:-right-16 md:opacity-30" />
+      <IphoneMockup className="left-[3%] top-[8%] z-0 hidden opacity-40 xl:block" size="sm" screen="gradient" />
+      <CodeStrip className="top-[60%] left-0 z-0 hidden opacity-30 lg:block" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
@@ -89,10 +93,10 @@ export function About() {
           <ScrollReveal className="space-y-6">
             <GlassCard hover className="h-full">
               <div className="mb-6 flex items-center gap-3">
-                <div className="flex size-10 items-center justify-center rounded-xl bg-nebula/10">
-                  <Briefcase className="size-5 text-nebula" />
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                  <Briefcase className="size-5 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-starlight">Career path</h3>
+                <h3 className="text-xl font-semibold text-foreground">Career path</h3>
               </div>
 
               <div className="relative space-y-0">
@@ -103,25 +107,25 @@ export function About() {
                     className="group relative flex items-start gap-4 pb-8 pl-8 last:pb-0"
                   >
                     {index !== career.length - 1 && (
-                      <div className="absolute top-2 bottom-0 left-[11px] w-px bg-white/10" />
+                      <div className="absolute top-2 bottom-0 left-[11px] w-px bg-border" />
                     )}
                     <div
                       className={`absolute top-1.5 left-0 size-5 rounded-full border-2 transition-colors ${
                         step.type === "current"
-                          ? "border-cosmos bg-cosmos"
-                          : "border-orbit bg-void group-hover:border-nebula"
+                          ? "border-primary bg-primary"
+                          : "border-muted-foreground bg-background group-hover:border-primary"
                       }`}
                     />
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                        <span className="font-medium text-starlight transition-colors group-hover:text-nebula">{step.company}</span>
+                        <span className="font-medium text-foreground transition-colors group-hover:text-primary">{step.company}</span>
                         {step.period && (
-                          <span className="text-xs font-medium text-cosmos">{step.period}</span>
+                          <span className="text-xs font-medium text-primary">{step.period}</span>
                         )}
                       </div>
                       <div className="flex items-center gap-2">
-                        <p className="text-sm text-orbit">{step.role}</p>
-                        <ArrowUpRight className="size-3 text-orbit opacity-0 transition-opacity group-hover:opacity-100" />
+                        <p className="text-sm text-muted-foreground">{step.role}</p>
+                        <ArrowUpRight className="size-3 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
                       </div>
                     </div>
                   </a>
@@ -134,19 +138,19 @@ export function About() {
             <ScrollReveal delay={0.1}>
               <GlassCard hover className="h-full">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-nebula/10">
-                    <GraduationCap className="size-5 text-nebula" />
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                    <GraduationCap className="size-5 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold text-starlight">Education</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Education</h3>
                 </div>
                 <div className="space-y-4">
                   {education.map((edu) => (
                     <div key={edu.school}>
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-starlight">{edu.school}</span>
-                        <span className="text-xs text-orbit">{edu.period}</span>
+                        <span className="font-medium text-foreground">{edu.school}</span>
+                        <span className="text-xs text-muted-foreground">{edu.period}</span>
                       </div>
-                      <p className="text-sm text-orbit">{edu.degree}</p>
+                      <p className="text-sm text-muted-foreground">{edu.degree}</p>
                     </div>
                   ))}
                 </div>
@@ -156,17 +160,17 @@ export function About() {
             <ScrollReveal delay={0.2}>
               <GlassCard hover className="h-full">
                 <div className="mb-5 flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-nebula/10">
-                    <Rocket className="size-5 text-nebula" />
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                    <Rocket className="size-5 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold text-starlight">Working principles</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Working principles</h3>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   {principles.map((principle) => (
-                    <div key={principle.title} className="rounded-xl bg-white/[0.03] p-4">
-                      <principle.icon className="mb-2 size-5 text-nebula" />
-                      <h4 className="mb-1 text-sm font-medium text-starlight">{principle.title}</h4>
-                      <p className="text-xs leading-relaxed text-orbit">{principle.description}</p>
+                    <div key={principle.title} className="rounded-xl bg-muted/40 p-4">
+                      <principle.icon className="mb-2 size-5 text-primary" />
+                      <h4 className="mb-1 text-sm font-medium text-foreground">{principle.title}</h4>
+                      <p className="text-xs leading-relaxed text-muted-foreground">{principle.description}</p>
                     </div>
                   ))}
                 </div>

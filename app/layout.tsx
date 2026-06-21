@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "./components/theme-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -63,10 +64,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
+      suppressHydrationWarning
+      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden">
-        {children}
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
