@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Mail } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { GithubIcon, LinkedinIcon } from "./icons";
 
 const navItems = [
@@ -15,8 +14,9 @@ const navItems = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
+  const isHome = pathname === "/" || pathname === "";
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -38,16 +38,15 @@ export function Header() {
         }`}
       >
         <div className="flex items-center justify-between">
-          <a href="#" className="text-lg font-semibold tracking-tight text-starlight">
+          <a href="/" className="text-lg font-semibold tracking-tight text-starlight">
             byescaleira
           </a>
 
-          {/* Desktop nav */}
           <nav className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={isHome ? item.href : `/${item.href}`}
                 className="rounded-lg px-3 py-2 text-sm text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
               >
                 {item.label}
@@ -74,50 +73,12 @@ export function Header() {
             >
               <LinkedinIcon className="size-5" />
             </a>
-            <a
-              href="mailto:rafaelescaleira@icloud.com"
-              className="rounded-lg p-2 text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
-              aria-label="Email"
-            >
-              <Mail className="size-5" />
-            </a>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="rounded-lg p-2 text-orbit hover:bg-white/[0.06] md:hidden"
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-          </button>
+          {/* Spacer for visual balance on mobile */}
+          <div className="w-8 md:hidden" />
         </div>
       </div>
-
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="glass-strong mx-4 mt-2 rounded-2xl p-4 md:hidden"
-          >
-            <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-lg px-3 py-3 text-sm text-orbit transition-colors hover:bg-white/[0.06] hover:text-starlight"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }

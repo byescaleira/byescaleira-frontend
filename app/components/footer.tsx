@@ -1,6 +1,5 @@
 "use client";
 
-import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "./icons";
 
 export function Footer() {
@@ -41,13 +40,6 @@ export function Footer() {
             aria-label="X/Twitter"
           >
             <TwitterIcon className="size-4" />
-          </a>
-          <a
-            href="mailto:rafaelescaleira@icloud.com"
-            className="rounded-full border border-white/10 bg-white/[0.03] p-2.5 text-orbit transition-colors hover:text-starlight"
-            aria-label="Email"
-          >
-            <Mail className="size-4" />
           </a>
         </div>
       </div>

@@ -5,16 +5,10 @@ import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
-import { Mail, MessageCircle, Calendar, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Calendar } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "../components/icons";
 
 const contacts = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "rafaelescaleira@icloud.com",
-    href: "mailto:rafaelescaleira@icloud.com",
-  },
   {
     icon: LinkedinIcon,
     label: "LinkedIn",
@@ -26,12 +20,6 @@ const contacts = [
     label: "GitHub",
     value: "github.com/byescaleira",
     href: "https://github.com/byescaleira",
-  },
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    value: "+55 67 98188-4499",
-    href: "https://wa.me/5567981884499",
   },
 ];
 
@@ -72,20 +60,22 @@ export function Contact() {
 
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
-                href="mailto:rafaelescaleira@icloud.com"
+                href="https://www.linkedin.com/in/rafael-eescaleira"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-nebula px-6 text-sm font-medium text-white transition-colors hover:bg-nebula/90"
               >
-                <Mail className="size-4" />
-                Send an email
+                <LinkedinIcon className="size-4" />
+                Connect on LinkedIn
               </a>
               <a
-                href="https://www.linkedin.com/in/rafael-eescaleira"
+                href="https://github.com/byescaleira"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight transition-colors hover:bg-white/[0.08]"
               >
-                <LinkedinIcon className="size-4" />
-                Connect on LinkedIn
+                <GithubIcon className="size-4" />
+                View GitHub
               </a>
             </div>
           </GlassCard>

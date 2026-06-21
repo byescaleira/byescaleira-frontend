@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
+import { IphoneMockup } from "../components/iphone-mockup";
 import { Play, Code, Sparkles, Smartphone, Info } from "lucide-react";
 
 const demos = [
@@ -100,8 +101,15 @@ export function Playground() {
   const [active, setActive] = useState(demos[0]);
 
   return (
-    <section id="playground" className="relative px-6 py-24 md:px-12 md:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="playground" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
+      <IphoneMockup
+        className="right-4 top-12 z-0 hidden opacity-30 lg:block"
+        size="sm"
+        screen="swiftui"
+        float={false}
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Playground"
           title="SwiftUI in the browser"

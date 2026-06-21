@@ -3,7 +3,8 @@
 import { SectionHeading } from "../components/section-heading";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { GlassCard } from "../components/glass-card";
-import { Globe, Trophy, Users, TrendingUp, Tv } from "lucide-react";
+import { OrbitDecoration } from "../components/orbit-decoration";
+import { Globe, Trophy, Users, TrendingUp, Tv, ArrowUpRight } from "lucide-react";
 
 const highlights = [
   {
@@ -48,8 +49,10 @@ const previousRoles = [
 
 export function ProfessionalWork() {
   return (
-    <section id="work" className="relative px-6 py-24 md:px-12 md:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="work" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
+      <OrbitDecoration className="-left-40 bottom-0 h-96 w-96 opacity-20 md:-left-24 md:opacity-30" reverse />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Professional Work"
           title="Globo / Cartola FC"
@@ -58,26 +61,31 @@ export function ProfessionalWork() {
 
         <div className="grid gap-8 lg:grid-cols-5">
           <ScrollReveal className="lg:col-span-3">
-            <GlassCard glow="blue" className="h-full">
+            <GlassCard glow="blue" className="group h-full">
               <div className="mb-6 flex items-center gap-4">
                 <div className="flex size-14 items-center justify-center rounded-2xl bg-nebula/10">
                   <Tv className="size-7 text-nebula" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-semibold text-starlight">Cartola FC</h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-2xl font-semibold text-starlight">Cartola FC</h3>
+                    <ArrowUpRight className="size-5 text-orbit opacity-0 transition-opacity group-hover:opacity-100" />
+                  </div>
                   <p className="text-sm text-orbit">Globo · iOS Specialist · Present</p>
                 </div>
               </div>
 
-              <p className="mb-6 leading-relaxed text-orbit">
-                Cartola FC is more than a game — it is a national ritual during
-                the Brazilian football season. As an iOS Specialist at Globo, I
-                work on the architecture, performance, and user experience of
-                an app used by millions of fans every round. The challenge is
-                not just shipping features; it is keeping a massive codebase
-                healthy, fast, and ready for spikes of traffic right after each
-                match.
-              </p>
+              <a href="/experience/globo/" className="block">
+                <p className="mb-6 leading-relaxed text-orbit">
+                  Cartola FC is more than a game — it is a national ritual during
+                  the Brazilian football season. As an iOS Specialist at Globo, I
+                  work on the architecture, performance, and user experience of
+                  an app used by millions of fans every round. The challenge is
+                  not just shipping features; it is keeping a massive codebase
+                  healthy, fast, and ready for spikes of traffic right after each
+                  match.
+                </p>
+              </a>
 
               <div className="mb-6 flex flex-wrap gap-2">
                 {[

@@ -4,6 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
+import { IphoneMockup } from "../components/iphone-mockup";
+import { SatelliteStrip } from "../components/orbit-decoration";
 import {
   Smartphone,
   Layers,
@@ -98,8 +100,16 @@ export function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="relative px-6 py-24 md:px-12 md:py-32">
-      <div className="mx-auto max-w-6xl">
+    <section id="skills" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
+      <SatelliteStrip className="left-8 top-32 hidden flex-col md:flex" />
+      <IphoneMockup
+        className="right-4 top-20 z-0 hidden opacity-40 lg:block"
+        size="sm"
+        screen="gradient"
+        float={false}
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Capabilities"
           title="What I do best"

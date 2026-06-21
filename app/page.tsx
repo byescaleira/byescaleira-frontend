@@ -1,6 +1,9 @@
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { StarField } from "./components/star-field";
+import { ScrollProgress } from "./components/scroll-progress";
+import { MobileTabBar } from "./components/mobile-tab-bar";
+import { CodeStrip } from "./components/code-strip";
 import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
 import { Skills } from "./sections/skills";
@@ -13,17 +16,20 @@ export default function Home() {
   return (
     <>
       <StarField />
+      <ScrollProgress />
       <Header />
-      <main className="relative z-10 flex flex-1 flex-col">
+      <main className="relative z-10 flex flex-1 flex-col pb-24 md:pb-0">
         <Hero />
         <About />
         <Skills />
         <ProfessionalWork />
         <PersonalProjects />
         <Playground />
+        <CodeStrip />
         <Contact />
       </main>
       <Footer />
+      <MobileTabBar />
     </>
   );
 }

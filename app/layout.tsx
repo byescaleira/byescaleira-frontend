@@ -36,12 +36,12 @@ export const metadata: Metadata = {
     "Rafael Escaleira",
     "byescaleira",
   ],
-  authors: [{ name: "Rafael E. Escaleira", url: "https://byescaleira.com" }],
+  authors: [{ name: "Rafael E. Escaleira", url: "https://byescaleira-frontend.vercel.app" }],
   openGraph: {
     title: "Rafael Escaleira — iOS Specialist",
     description:
       "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale.",
-    url: "https://byescaleira.com",
+    url: "https://byescaleira-frontend.vercel.app",
     siteName: "byescaleira",
     locale: "en_US",
     type: "website",

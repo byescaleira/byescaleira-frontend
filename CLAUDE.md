@@ -12,10 +12,9 @@
 
 - **Name:** Rafael E. Escaleira
 - **Location:** Campo Grande, MS / Rio de Janeiro, Brazil
-- **Email:** rafaelescaleira@icloud.com
 - **LinkedIn:** linkedin.com/in/rafael-eescaleira
 - **GitHub:** github.com/byescaleira
-- **WhatsApp:** +55 67 98188-4499
+- **Public contact:** use LinkedIn or GitHub for initial contact (no email/phone in public UI)
 
 ### Career
 - 7+ years building iOS and cross-platform products.
@@ -39,7 +38,7 @@
 - Apple-native aesthetic: Deep Space, Liquid Glass, refined typography, generous whitespace.
 - Heavy animations: scroll reveals, hover micro-interactions, page transitions, parallax, glowing accents.
 - Functionalidade fora da caixa: avoid generic templates; every section must feel crafted.
-- Responsive from mobile to desktop.
+- Responsive from mobile to desktop; mobile must feel like a native iOS app.
 - Dark-first palette with controlled light moments.
 
 ## Site Sections Required
@@ -50,7 +49,15 @@
 4. **Professional Work** — Globo/Cartola as main case; previous companies in compact timeline.
 5. **Personal Projects** — Prism, Orbit, Cashly, plus any open-source experiments.
 6. **Playground** — SwiftUI-in-the-browser integration using MSF/MiniSwift (tokentradez fork). If a compiled artifact is not available, provide a polished interactive demo with a clear technical explanation of the integration.
-7. **Contact / CTA** — email, LinkedIn, GitHub, WhatsApp, calendar link if available.
+7. **Contact / CTA** — LinkedIn and GitHub only; no email or phone in UI.
+
+## New Requirements for This Iteration
+
+1. **Animated illustrations** of space, iPhone, and coding throughout the site (hero background, section accents, floating decorations).
+2. **Mobile iOS-style tab view** — replace the current mobile hamburger with a bottom Liquid Glass tab bar resembling iOS tab navigation.
+3. **Remove sensitive contact info** — no WhatsApp number and no email address in any public page or component.
+4. **Dedicated detail pages** for each experience (Globo, Deliver IT/Letsbank, Next, TocaLivros, Boviplan, A.A.A. UFMS, CATWORK) and each personal project (Prism, Orbit, Cashly, Open Source).
+5. **Animated coding/spacing illustrations for navigation and scroll** — visual cues that guide the user through the page, such as a scrolling code strip, parallax satellites, orbit paths, and iPhone mockups.
 
 ## Technical Stack
 
@@ -66,6 +73,7 @@
 - Use only the workflow from `/website-builder-setup` command.
 - Follow the website-builder-setup instructions for installing UI/UX Pro Max, Framer Motion, and 21st.dev Magic.
 - No placeholder content: every text must reflect Rafael's real profile.
+- No email or phone in the public UI.
 - Site must build with `npm run build` with zero errors before deploying.
 - Deploy to Vercel with `vercel --prod`.
 

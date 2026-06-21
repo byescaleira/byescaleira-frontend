@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Mail } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon, TwitterIcon } from "../components/icons";
+import { IphoneMockup } from "../components/iphone-mockup";
 
 const words = ["Swift", "SwiftUI", "Clean Architecture", "AI-augmented workflows"];
 
@@ -13,8 +14,8 @@ export function Hero() {
 
   return (
     <section
-      id="#"
-      className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-24 pb-16 md:px-12"
+      id="hero"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-16 md:px-12"
     >
       {/* Animated ambient orbs */}
       <motion.div
@@ -49,6 +50,19 @@ export function Hero() {
           className="absolute top-[45%] left-[60%] h-64 w-64 rounded-full bg-nebula-glow/10 blur-[80px]"
         />
       </motion.div>
+
+      {/* Floating iPhone mockups */}
+      <IphoneMockup
+        className="right-[5%] top-[18%] z-0 hidden lg:block"
+        size="md"
+        screen="swiftui"
+        rotate
+      />
+      <IphoneMockup
+        className="bottom-[16%] left-[6%] z-0 hidden opacity-60 lg:block"
+        size="sm"
+        screen="code"
+      />
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.div
@@ -128,7 +142,6 @@ export function Hero() {
             href="#contact"
             className="group inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-nebula px-6 text-sm font-medium text-white shadow-[0_0_50px_-10px_rgba(59,130,246,0.55)] transition-all hover:bg-nebula/90 hover:shadow-[0_0_60px_-8px_rgba(59,130,246,0.7)]"
           >
-            <Mail className="size-4" />
             Get in touch
           </a>
           <a
@@ -150,13 +163,12 @@ export function Hero() {
             { href: "https://github.com/byescaleira", label: "GitHub", Icon: GithubIcon },
             { href: "https://www.linkedin.com/in/rafael-eescaleira", label: "LinkedIn", Icon: LinkedinIcon },
             { href: "https://x.com/byescaleira", label: "X/Twitter", Icon: TwitterIcon },
-            { href: "mailto:rafaelescaleira@icloud.com", label: "Email", Icon: Mail },
           ].map(({ href, label, Icon }, i) => (
             <motion.a
               key={label}
               href={href}
-              target={href.startsWith("mailto:") ? undefined : "_blank"}
-              rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 + i * 0.08 }}

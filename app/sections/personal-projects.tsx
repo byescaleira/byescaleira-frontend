@@ -10,6 +10,7 @@ import { Orbit, Wallet, Code, Hexagon } from "lucide-react";
 const projects = [
   {
     codename: "Prism",
+    slug: "prism",
     title: "Design System",
     icon: Hexagon,
     description:
@@ -19,6 +20,7 @@ const projects = [
   },
   {
     codename: "Orbit",
+    slug: "orbit",
     title: "CLI / Automation",
     icon: Orbit,
     description:
@@ -28,6 +30,7 @@ const projects = [
   },
   {
     codename: "Cashly",
+    slug: "cashly",
     title: "Finance App",
     icon: Wallet,
     description:
@@ -37,6 +40,7 @@ const projects = [
   },
   {
     codename: "Open Source",
+    slug: "open-source",
     title: "Experiments & Tools",
     icon: Code,
     description:
@@ -84,44 +88,44 @@ export function PersonalProjects() {
             const Icon = project.icon;
             return (
               <motion.div key={project.codename} variants={item}>
-                <GlassCard hover className="group h-full">
-                  <div className="mb-4 flex items-start justify-between">
-                    <div className="flex size-12 items-center justify-center rounded-2xl bg-nebula/10 transition-colors group-hover:bg-nebula/20">
-                      <Icon className="size-6 text-nebula" />
-                    </div>
-                    <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit">
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <div className="mb-2 flex items-baseline gap-2">
-                    <span className="text-sm font-medium text-nebula">{project.codename}</span>
-                    <h3 className="text-xl font-semibold text-starlight">{project.title}</h3>
-                  </div>
-
-                  <p className="mb-5 leading-relaxed text-orbit">{project.description}</p>
-
-                  <div className="mb-5 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit"
-                      >
-                        {tag}
+                <a href={`/project/${project.slug}/`}>
+                  <GlassCard hover className="group h-full">
+                    <div className="mb-4 flex items-start justify-between">
+                      <div className="flex size-12 items-center justify-center rounded-2xl bg-nebula/10 transition-colors group-hover:bg-nebula/20">
+                        <Icon className="size-6 text-nebula" />
+                      </div>
+                      <span className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit">
+                        {project.status}
                       </span>
-                    ))}
-                  </div>
+                    </div>
 
-                  <a
-                    href="https://github.com/byescaleira"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-nebula transition-colors hover:text-nebula-glow"
-                  >
-                    View on GitHub
-                    <ExternalLink className="size-4" />
-                  </a>
-                </GlassCard>
+                    <div className="mb-2 flex items-baseline gap-2">
+                      <span className="text-sm font-medium text-nebula">{project.codename}</span>
+                      <div className="flex items-center gap-1">
+                        <h3 className="text-xl font-semibold text-starlight">{project.title}</h3>
+                        <ExternalLink className="size-4 text-orbit opacity-0 transition-opacity group-hover:opacity-100" />
+                      </div>
+                    </div>
+
+                    <p className="mb-5 leading-relaxed text-orbit">{project.description}</p>
+
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-orbit"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <span className="inline-flex items-center gap-2 text-sm font-medium text-nebula transition-colors group-hover:text-nebula-glow">
+                      Read more
+                      <ExternalLink className="size-4" />
+                    </span>
+                  </GlassCard>
+                </a>
               </motion.div>
             );
           })}

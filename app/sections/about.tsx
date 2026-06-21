@@ -3,6 +3,7 @@
 import { ScrollReveal } from "../components/scroll-reveal";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
+import { OrbitDecoration } from "../components/orbit-decoration";
 import {
   Rocket,
   BrainCircuit,
@@ -10,6 +11,7 @@ import {
   PackageOpen,
   GraduationCap,
   Briefcase,
+  ArrowUpRight,
 } from "lucide-react";
 
 const principles = [
@@ -45,13 +47,14 @@ const career = [
     role: "iOS Specialist — Cartola FC",
     period: "Present",
     type: "current",
+    slug: "globo",
   },
-  { company: "Deliver IT / Letsbank", role: "iOS Developer", period: "" },
-  { company: "Next", role: "iOS Developer", period: "" },
-  { company: "TocaLivros", role: "Mobile Developer", period: "" },
-  { company: "Boviplan", role: "Mobile Developer", period: "" },
-  { company: "A.A.A. UFMS", role: "Developer", period: "" },
-  { company: "CATWORK", role: "Developer", period: "" },
+  { company: "Deliver IT / Letsbank", role: "iOS Developer", period: "", slug: "deliver-it-letsbank" },
+  { company: "Next", role: "iOS Developer", period: "", slug: "next" },
+  { company: "TocaLivros", role: "Mobile Developer", period: "", slug: "tocalivros" },
+  { company: "Boviplan", role: "Mobile Developer", period: "", slug: "boviplan" },
+  { company: "A.A.A. UFMS", role: "Developer", period: "", slug: "aaa-ufms" },
+  { company: "CATWORK", role: "Developer", period: "", slug: "catwork" },
 ];
 
 const education = [
@@ -71,9 +74,11 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative px-6 py-24 md:px-12 md:py-32"
+      className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32"
     >
-      <div className="mx-auto max-w-6xl">
+      <OrbitDecoration className="-right-32 top-24 h-80 w-80 opacity-20 md:-right-16 md:opacity-30" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Who I Am"
           title="Builder by instinct, engineer by choice"
@@ -92,25 +97,34 @@ export function About() {
 
               <div className="relative space-y-0">
                 {career.map((step, index) => (
-                  <div key={step.company} className="relative pl-8 pb-8 last:pb-0">
+                  <a
+                    key={step.company}
+                    href={`/experience/${step.slug}/`}
+                    className="group relative flex items-start gap-4 pb-8 pl-8 last:pb-0"
+                  >
                     {index !== career.length - 1 && (
                       <div className="absolute top-2 bottom-0 left-[11px] w-px bg-white/10" />
                     )}
                     <div
-                      className={`absolute top-1.5 left-0 size-5 rounded-full border-2 ${
+                      className={`absolute top-1.5 left-0 size-5 rounded-full border-2 transition-colors ${
                         step.type === "current"
                           ? "border-cosmos bg-cosmos"
-                          : "border-orbit bg-void"
+                          : "border-orbit bg-void group-hover:border-nebula"
                       }`}
                     />
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <span className="font-medium text-starlight">{step.company}</span>
-                      {step.period && (
-                        <span className="text-xs font-medium text-cosmos">{step.period}</span>
-                      )}
+                    <div className="flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <span className="font-medium text-starlight transition-colors group-hover:text-nebula">{step.company}</span>
+                        {step.period && (
+                          <span className="text-xs font-medium text-cosmos">{step.period}</span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm text-orbit">{step.role}</p>
+                        <ArrowUpRight className="size-3 text-orbit opacity-0 transition-opacity group-hover:opacity-100" />
+                      </div>
                     </div>
-                    <p className="text-sm text-orbit">{step.role}</p>
-                  </div>
+                  </a>
                 ))}
               </div>
             </GlassCard>
