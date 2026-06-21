@@ -1,27 +1,49 @@
 # byescaleira-frontend
 
-Personal website for [Rafael Escaleira](https://byescaleira.com) — iOS Specialist at Globo, building native Apple products that scale.
+Personal website for [Rafael Escaleira](https://github.com/byescaleira) — iOS Specialist at Globo, working on Cartola FC.
 
-Built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, shadcn/ui, and the Deep Space visual identity.
+Live at **https://byescaleira-frontend.vercel.app** (deployed on Vercel).
 
-## Tech stack
+## What it is
 
-- **Framework:** Next.js 14+ (App Router)
+A single-page portfolio built to feel like a native Apple experience on the web:
+
+- Deep Space color palette with Liquid Glass surfaces
+- Heavy, accessible Framer Motion animations
+- Real profile content and career history
+- Interactive SwiftUI-in-the-browser Playground demo
+- Fully responsive from mobile to desktop
+
+## Built with
+
+- **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS v4
-- **Animations:** Framer Motion
-- **Components:** shadcn/ui + custom Liquid Glass pieces
-- **Icons:** Lucide + custom SVGs for brand marks
-- **Deployment:** Vercel (static export)
+- **Styling:** Tailwind CSS 4
+- **UI:** shadcn/ui (base-nova)
+- **Motion:** Framer Motion
+- **Icons:** Lucide + inline SVGs
+- **Fonts:** DM Sans, Space Grotesk, JetBrains Mono
 
-## Getting started
+## Design workflow
+
+This site was designed with the help of **UI/UX Pro Max** and **Framer Motion**, installed via the [website-builder-setup](https://github.com/tenfoldmarc/website-builder-setup) skill for Claude Code.
+
+The design system was generated with:
+
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py \
+  "personal portfolio ios specialist dark mode liquid glass apple premium animations" \
+  --design-system -p "byescaleira" -f markdown --persist
+```
+
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the site.
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Build
 
@@ -29,11 +51,9 @@ Open [http://localhost:3000](http://localhost:3000) to see the site.
 npm run build
 ```
 
-The static export is written to the `dist/` directory. `next.config.ts` is configured with `output: 'export'` and `distDir: 'dist'`.
+Static export is enabled via `output: 'export'` in `next.config.ts`. The build must pass with zero errors before deploying.
 
 ## Deploy
-
-After the build passes:
 
 ```bash
 vercel --prod
@@ -43,29 +63,19 @@ vercel --prod
 
 ```
 app/
-  components/    # Reusable UI pieces (StarField, GlassCard, icons)
-  sections/      # Page sections (Hero, About, Skills, Work, Projects, Playground, Contact)
-  globals.css    # Deep Space theme + Liquid Glass utilities
-  layout.tsx     # Root layout, metadata, dark mode
-  page.tsx       # Landing page assembly
-components/ui/   # shadcn/ui components
-public/          # Static assets
-dist/            # Static export output
+  components/     # Reusable UI primitives (Header, Footer, GlassCard, ScrollReveal, etc.)
+  sections/       # Hero, About, Skills, Work, Projects, Playground, Contact
+  globals.css     # Deep Space + Liquid Glass design tokens
+  layout.tsx      # Fonts and metadata
+  page.tsx        # Landing page composition
+public/           # Static assets
+.claude/          # Claude Code skills (UI/UX Pro Max, Framer Motion)
 ```
 
-## Design notes
+## SwiftUI Playground note
 
-- Dark-first palette based on the Deep Space identity.
-- Apple Liquid Glass aesthetic with backdrop blur, subtle borders, and glowing accents.
-- Heavy use of Framer Motion for scroll reveals, hover micro-interactions, and the animated starfield background.
-- The Playground section includes a React/Framer Motion mirror of SwiftUI components. The integration point for a real MSF/MiniSwift compiled artifact is documented and ready to plug in.
-
-## AI usage
-
-Parts of this site were generated with AI assistance (Claude Code) and then reviewed, edited, and wired into the real build by Rafael. The profile content, architecture decisions, and visual direction are human-owned.
+The Playground simulates SwiftUI components in React. The production vision is to embed a compiled Swift-to-WASM artifact from MSF / MiniSwift and render the real canvas inside the same container.
 
 ---
 
-Built by [Rafael Escaleira](https://byescaleira.com) · [@byescaleira](https://x.com/byescaleira)
-
-If something here helped you, let me know. If something is wrong, tell me louder.
+Built by Rafael Escaleira · [@byescaleira](https://x.com/byescaleira)

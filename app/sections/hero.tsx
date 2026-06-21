@@ -1,21 +1,35 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "../components/icons";
+import { GithubIcon, LinkedinIcon, TwitterIcon } from "../components/icons";
+
+const words = ["Swift", "SwiftUI", "Clean Architecture", "AI-augmented workflows"];
 
 export function Hero() {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
     <section
       id="#"
       className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-24 pb-16 md:px-12"
     >
+      <motion.div
+        style={{ y: y1, opacity }}
+        className="absolute inset-0 z-0 pointer-events-none"
+      >
+        <div className="absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-nebula/10 blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-cosmos/10 blur-3xl" />
+      </motion.div>
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-md"
+          className="mb-6 inline-flex items-center gap-2 rounded-full liquid-glass px-4 py-2"
         >
           <span className="relative flex size-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cosmos opacity-75"></span>
@@ -27,28 +41,51 @@ export function Hero() {
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="text-5xl font-semibold tracking-tight text-starlight sm:text-6xl md:text-7xl lg:text-8xl"
+          transition={{ duration: 1, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="font-heading text-6xl font-semibold tracking-tight text-starlight sm:text-7xl md:text-8xl lg:text-9xl"
         >
-          Rafael Escaleira
+          Rafael{" "}
+          <span className="text-gradient glow-text">Escaleira</span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mt-6 max-w-2xl text-xl leading-relaxed text-orbit md:text-2xl"
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto mt-6 flex min-h-[2rem] max-w-2xl items-center justify-center gap-2 text-xl text-orbit md:text-2xl"
         >
-          iOS Specialist. Native-first architect. 7+ years shipping Swift,
-          SwiftUI, and clean architecture for products used by millions.
-        </motion.p>
+          <span className="font-medium text-starlight">iOS Specialist.</span>
+          <span className="inline-flex">
+            {words.map((word, index) => (
+              <motion.span
+                key={word}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{
+                  opacity: [0, 1, 1, 0],
+                  y: [10, 0, 0, -10],
+                }}
+                transition={{
+                  duration: 3,
+                  delay: index * 3,
+                  repeat: Infinity,
+                  repeatDelay: (words.length - 1) * 3 - 3,
+                  ease: "easeInOut",
+                  times: [0, 0.15, 0.85, 1],
+                }}
+                className="absolute font-medium text-nebula-glow"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </span>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto mt-4 max-w-xl text-base text-orbit/70"
         >
           I help teams turn mobile complexity into simple, testable, scalable
@@ -58,19 +95,19 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
             href="#contact"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-nebula px-6 text-sm font-medium text-white transition-colors hover:bg-nebula/90"
+            className="group inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-nebula px-6 text-sm font-medium text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:bg-nebula/90"
           >
             <Mail className="size-4" />
             Get in touch
           </a>
           <a
             href="#work"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight backdrop-blur-md transition-colors hover:bg-white/[0.08]"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full liquid-glass px-6 text-sm font-medium text-starlight transition-all hover:bg-white/[0.08]"
           >
             See my work
             <ArrowDown className="size-4" />
@@ -80,43 +117,39 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
+          transition={{ duration: 1, delay: 0.7 }}
           className="mt-12 flex items-center justify-center gap-4"
         >
-          <a
-            href="https://github.com/byescaleira"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-white/10 bg-white/[0.03] p-3 text-orbit transition-all hover:border-nebula/50 hover:text-starlight"
-            aria-label="GitHub"
-          >
-            <GithubIcon className="size-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/rafael-eescaleira"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-white/10 bg-white/[0.03] p-3 text-orbit transition-all hover:border-nebula/50 hover:text-starlight"
-            aria-label="LinkedIn"
-          >
-            <LinkedinIcon className="size-5" />
-          </a>
-          <a
-            href="mailto:rafaelescaleira@icloud.com"
-            className="rounded-full border border-white/10 bg-white/[0.03] p-3 text-orbit transition-all hover:border-nebula/50 hover:text-starlight"
-            aria-label="Email"
-          >
-            <Mail className="size-5" />
-          </a>
+          {[
+            { href: "https://github.com/byescaleira", label: "GitHub", Icon: GithubIcon },
+            { href: "https://www.linkedin.com/in/rafael-eescaleira", label: "LinkedIn", Icon: LinkedinIcon },
+            { href: "https://x.com/byescaleira", label: "X/Twitter", Icon: TwitterIcon },
+            { href: "mailto:rafaelescaleira@icloud.com", label: "Email", Icon: Mail },
+          ].map(({ href, label, Icon }, i) => (
+            <motion.a
+              key={label}
+              href={href}
+              target={href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 + i * 0.08 }}
+              whileHover={{ scale: 1.12, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              className="liquid-glass rounded-full p-3 text-orbit transition-colors hover:text-starlight"
+              aria-label={label}
+            >
+              <Icon className="size-5" />
+            </motion.a>
+          ))}
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
+        transition={{ duration: 0.8, delay: 1 }}
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

@@ -1,38 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Rafael Escaleira — iOS Specialist",
   description:
-    "iOS Specialist building native Apple products that scale. 7+ years shipping Swift, SwiftUI, and clean architecture across Globo/Cartola, fintech, and edtech.",
+    "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale. Currently leading AI adoption at Globo on Cartola FC.",
   keywords: [
     "iOS",
     "Swift",
     "SwiftUI",
-    "iOS Developer",
+    "UIKit",
+    "mobile architecture",
+    "Clean Architecture",
+    "TDD",
+    "Swift Package Manager",
     "Rafael Escaleira",
     "byescaleira",
-    "Cartola FC",
-    "Globo",
-    "Mobile Architecture",
-    "Swift Package Manager",
   ],
   authors: [{ name: "Rafael E. Escaleira", url: "https://byescaleira.com" }],
   openGraph: {
     title: "Rafael Escaleira — iOS Specialist",
     description:
-      "iOS Specialist building native Apple products that scale. 7+ years shipping Swift, SwiftUI, and clean architecture.",
+      "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale.",
     url: "https://byescaleira.com",
     siteName: "byescaleira",
     locale: "en_US",
@@ -42,10 +50,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rafael Escaleira — iOS Specialist",
     description:
-      "iOS Specialist building native Apple products that scale. Swift, SwiftUI, clean architecture.",
+      "iOS Specialist focused on mobile architecture, code quality, modularization, and shipping native iOS products that scale.",
     creator: "@byescaleira",
   },
-  robots: "index, follow",
 };
 
 export default function RootLayout({
@@ -56,10 +63,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
-      suppressHydrationWarning
+      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-void text-starlight">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         {children}
       </body>
     </html>
