@@ -3,7 +3,6 @@ import { Footer } from "./components/footer";
 import { StarField } from "./components/star-field";
 import { ScrollProgress } from "./components/scroll-progress";
 import { MobileTabBar } from "./components/mobile-tab-bar";
-import { CodeStrip } from "./components/code-strip";
 import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
 import { Skills } from "./sections/skills";
@@ -25,7 +24,6 @@ export default function Home() {
         <ProfessionalWork />
         <PersonalProjects />
         <Playground />
-        <CodeStrip />
         <Contact />
       </main>
       <Footer />

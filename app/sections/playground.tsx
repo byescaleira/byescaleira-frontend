@@ -8,11 +8,7 @@ import { ScrollReveal } from "../components/scroll-reveal";
 import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
 import { Play, Code, Sparkles, Info } from "lucide-react";
 
-const demos = [
-  {
-    id: "card",
-    label: "Glass Card",
-    swiftCode: `struct GlassCard: View {
+const swiftCard = `struct GlassCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Hello, Cartola")
@@ -32,21 +28,9 @@ const demos = [
                 .stroke(.white.opacity(0.12), lineWidth: 1)
         )
     }
-}`,
-    preview: (
-      <div className="w-full rounded-2xl bg-white/5 p-6 backdrop-blur-xl">
-        <h4 className="text-lg font-semibold text-foreground">Hello, Cartola</h4>
-        <p className="mt-2 text-sm text-muted-foreground">Native iOS craft in the browser.</p>
-        <button className="mt-4 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-          Tap me
-        </button>
-      </div>
-    ),
-  },
-  {
-    id: "animation",
-    label: "Motion",
-    swiftCode: `struct PulsingDot: View {
+}`;
+
+const swiftMotion = `struct PulsingDot: View {
     @State private var scale: CGFloat = 1.0
 
     var body: some View {
@@ -63,21 +47,9 @@ const demos = [
                 }
             }
     }
-}`,
-    preview: (
-      <div className="flex h-48 items-center justify-center">
-        <motion.div
-          className="size-6 rounded-full bg-primary"
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
-    ),
-  },
-  {
-    id: "gradient",
-    label: "Gradient",
-    swiftCode: `struct DeepSpaceText: View {
+}`;
+
+const swiftGradient = `struct DeepSpaceText: View {
     var body: some View {
         Text("Deep Space")
             .font(.system(size: 40, weight: .bold))
@@ -89,17 +61,61 @@ const demos = [
                 )
             )
     }
-}`,
+}`;
+
+const demos = [
+  {
+    id: "card",
+    label: "Glass Card",
+    swiftCode: swiftCard,
+    preview: (
+      <div className="w-full rounded-2xl border border-border/60 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 backdrop-blur-xl dark:from-white/[0.06]">
+        <h4 className="text-lg font-semibold text-foreground">Hello, Cartola</h4>
+        <p className="mt-2 text-sm text-muted-foreground">Native iOS craft in the browser.</p>
+        <button className="mt-4 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform active:scale-95">
+          Tap me
+        </button>
+      </div>
+    ),
+  },
+  {
+    id: "animation",
+    label: "Motion",
+    swiftCode: swiftMotion,
+    preview: (
+      <div className="flex h-48 items-center justify-center gap-8">
+        <motion.div
+          className="size-6 rounded-full bg-primary"
+          animate={{ scale: [1, 1.3, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="size-4 rounded-full border-2 border-primary"
+          animate={{ scale: [1, 1.6, 1], opacity: [1, 0.3, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+    ),
+  },
+  {
+    id: "gradient",
+    label: "Gradient",
+    swiftCode: swiftGradient,
     preview: (
       <div className="flex h-48 items-center justify-center">
-        <span className="text-gradient text-4xl font-bold">Deep Space</span>
+        <span
+          className="bg-gradient-to-r from-foreground via-primary to-blue-500 bg-clip-text text-4xl font-bold text-transparent"
+        >
+          Deep Space
+        </span>
       </div>
     ),
   },
 ];
 
 export function Playground() {
-  const [active, setActive] = useState(demos[0]);
+  const [activeId, setActiveId] = useState(demos[0].id);
+  const active = demos.find((d) => d.id === activeId) ?? demos[0];
 
   return (
     <section id="playground" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
@@ -130,7 +146,7 @@ export function Playground() {
                 {demos.map((demo) => (
                   <button
                     key={demo.id}
-                    onClick={() => setActive(demo)}
+                    onClick={() => setActiveId(demo.id)}
                     className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
                       active.id === demo.id
                         ? "bg-primary text-primary-foreground"
@@ -142,7 +158,7 @@ export function Playground() {
                 ))}
               </div>
 
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={active.id}
                   initial={{ opacity: 0, scale: 0.98 }}
@@ -171,7 +187,7 @@ export function Playground() {
                 <h3 className="text-xl font-semibold text-foreground">Swift source</h3>
               </div>
 
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.pre
                   key={active.id}
                   initial={{ opacity: 0, y: 8 }}
