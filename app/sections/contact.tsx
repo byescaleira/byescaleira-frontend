@@ -6,7 +6,7 @@ import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { ArrowUpRight, Calendar } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "../components/icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "../components/icons";
 
 const contacts = [
   {
@@ -20,6 +20,12 @@ const contacts = [
     label: "GitHub",
     value: "github.com/byescaleira",
     href: "https://github.com/byescaleira",
+  },
+  {
+    icon: XIcon,
+    label: "X / Twitter",
+    value: "x.com/byescaleira",
+    href: "https://x.com/byescaleira",
   },
 ];
 
@@ -58,7 +64,7 @@ export function Contact() {
               Brazil and happy to work with teams anywhere.
             </p>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href="https://www.linkedin.com/in/rafael-eescaleira"
                 target="_blank"
@@ -76,6 +82,15 @@ export function Contact() {
               >
                 <GithubIcon className="size-4" />
                 View GitHub
+              </a>
+              <a
+                href="https://x.com/byescaleira"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight transition-colors hover:bg-white/[0.08]"
+              >
+                <XIcon className="size-4" />
+                X / Twitter
               </a>
             </div>
           </GlassCard>
@@ -115,9 +130,20 @@ export function Contact() {
         </motion.div>
 
         <ScrollReveal delay={0.2}>
-          <div className="mt-12 flex items-center justify-center gap-2 text-sm text-orbit">
-            <Calendar className="size-4 text-nebula" />
-            <span>Prefer async first, then a call when it matters.</span>
+          <div className="mt-12 flex flex-col items-center justify-center gap-3 text-sm text-orbit">
+            <div className="flex items-center gap-2">
+              <Calendar className="size-4 text-nebula" />
+              <span>Prefer async first, then a call when it matters.</span>
+            </div>
+            <a
+              href="https://calendly.com/byescaleira"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 font-medium text-starlight transition-colors hover:border-nebula/50 hover:bg-white/[0.08]"
+            >
+              <Calendar className="size-4 text-nebula" />
+              Schedule a conversation
+            </a>
           </div>
         </ScrollReveal>
       </div>
