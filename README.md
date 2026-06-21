@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# byescaleira-frontend
 
-## Getting Started
+Personal website for [Rafael Escaleira](https://byescaleira.com) — iOS Specialist at Globo, building native Apple products that scale.
 
-First, run the development server:
+Built with Next.js 16, React 19, TypeScript, Tailwind CSS v4, Framer Motion, shadcn/ui, and the Deep Space visual identity.
+
+## Tech stack
+
+- **Framework:** Next.js 14+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Components:** shadcn/ui + custom Liquid Glass pieces
+- **Icons:** Lucide + custom SVGs for brand marks
+- **Deployment:** Vercel (static export)
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+The static export is written to the `dist/` directory. `next.config.ts` is configured with `output: 'export'` and `distDir: 'dist'`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After the build passes:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+vercel --prod
+```
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+  components/    # Reusable UI pieces (StarField, GlassCard, icons)
+  sections/      # Page sections (Hero, About, Skills, Work, Projects, Playground, Contact)
+  globals.css    # Deep Space theme + Liquid Glass utilities
+  layout.tsx     # Root layout, metadata, dark mode
+  page.tsx       # Landing page assembly
+components/ui/   # shadcn/ui components
+public/          # Static assets
+dist/            # Static export output
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design notes
+
+- Dark-first palette based on the Deep Space identity.
+- Apple Liquid Glass aesthetic with backdrop blur, subtle borders, and glowing accents.
+- Heavy use of Framer Motion for scroll reveals, hover micro-interactions, and the animated starfield background.
+- The Playground section includes a React/Framer Motion mirror of SwiftUI components. The integration point for a real MSF/MiniSwift compiled artifact is documented and ready to plug in.
+
+## AI usage
+
+Parts of this site were generated with AI assistance (Claude Code) and then reviewed, edited, and wired into the real build by Rafael. The profile content, architecture decisions, and visual direction are human-owned.
+
+---
+
+Built by [Rafael Escaleira](https://byescaleira.com) · [@byescaleira](https://x.com/byescaleira)
+
+If something here helped you, let me know. If something is wrong, tell me louder.
