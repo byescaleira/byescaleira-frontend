@@ -7,43 +7,66 @@ import { GlassCard } from "../components/glass-card";
 import { Play, RefreshCw, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { useTheme } from "next-themes";
 
 const Editor = dynamic(() => import("@monaco-editor/react").then((mod) => mod.default), { ssr: false });
 
-// Xcode Dark theme for Monaco
+// Real Xcode Dark color palette for Monaco
 const defineXcodeDarkTheme = (monaco: typeof import("monaco-editor")) => {
   monaco.editor.defineTheme("xcode-dark", {
     base: "vs-dark",
     inherit: true,
     rules: [
+      { token: "", foreground: "D4D4D4" },
       { token: "comment", foreground: "6A9955", fontStyle: "italic" },
+      { token: "comment.doc", foreground: "6A9955", fontStyle: "italic" },
       { token: "keyword", foreground: "FF7B72" },
+      { token: "keyword.flow", foreground: "C586C0" },
+      { token: "keyword.type", foreground: "569CD6" },
       { token: "string", foreground: "CE9178" },
+      { token: "string.quote", foreground: "CE9178" },
       { token: "number", foreground: "B5CEA8" },
+      { token: "number.hex", foreground: "B5CEA8" },
+      { token: "regexp", foreground: "CE9178" },
       { token: "type", foreground: "FFEC8B" },
+      { token: "type.identifier", foreground: "FFEC8B" },
       { token: "identifier", foreground: "DCDCAA" },
       { token: "function", foreground: "DCDCAA" },
+      { token: "method", foreground: "DCDCAA" },
       { token: "operator", foreground: "D4D4D4" },
       { token: "delimiter", foreground: "D4D4D4" },
       { token: "tag", foreground: "569CD6" },
       { token: "attribute.name", foreground: "9CDCFE" },
       { token: "attribute.value", foreground: "CE9178" },
-      { token: "keyword.flow", foreground: "C586C0" },
-      { token: "keyword.type", foreground: "569CD6" },
+      { token: "variable.name", foreground: "9CDCFE" },
+      { token: "parameter", foreground: "9CDCFE" },
+      { token: "property", foreground: "9CDCFE" },
+      { token: "constant", foreground: "4FC1FF" },
+      { token: "macro", foreground: "569CD6" },
+      { token: "invalid", foreground: "F44747" },
+      { token: "info-token", foreground: "569CD6" },
+      { token: "warn-token", foreground: "FFCC00" },
+      { token: "error-token", foreground: "F44747" },
     ],
     colors: {
       "editor.background": "1E1E1E",
+      "editor.foreground": "D4D4D4",
       "editor.lineHighlightBackground": "2A2D2E",
       "editorLineNumber.foreground": "858585",
-      "editorLineNumber.activeForeground": "D4D4D4",
+      "editorLineNumber.activeForeground": "C6C6C6",
       "editor.selectionBackground": "264F78",
       "editor.inactiveSelectionBackground": "264F7855",
+      "editor.selectionHighlightBackground": "ADD6FF26",
       "editorCursor.foreground": "A6A6A6",
+      "editorWhitespace.foreground": "3E3E3E",
+      "editorIndentGuide.background": "3E3E3E",
+      "editorIndentGuide.activeBackground": "636363",
       "editorBracketMatch.background": "0064001A",
       "editorBracketMatch.border": "B4B4B4",
       "editor.wordHighlightBackground": "575757B8",
       "editor.wordHighlightStrongBackground": "004972A8",
+      "editor.findMatchBackground": "515C6A",
+      "editor.findMatchHighlightBackground": "EA5C0055",
+      "editor.hoverHighlightBackground": "264F78",
     },
   });
 };
@@ -175,13 +198,14 @@ function translateSwiftToPreview(code: string): React.ReactNode {
 }
 
 export function Playground() {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const [activeId, setActiveId] = useState<DemoId>("glassCard");
   const [editorCode, setEditorCode] = useState(demos[0].swiftCode);
   const [error, setError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const activeDemo = useMemo(() => demos.find((d) => d.id === activeId) ?? demos[0], [activeId]);
 
@@ -206,7 +230,27 @@ export function Playground() {
     setError(null);
   }, [activeDemo]);
 
-  if (!mounted) return null;
+  if (!isClient) {
+    return (
+      <section id="playground" className="relative overflow-hidden py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionHeading
+            eyebrow="Playground"
+            title="SwiftUI in the browser"
+            description="A live Monaco editor with Swift syntax highlighting."
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <GlassCard className="flex min-h-[420px] items-center justify-center">
+              <span className="text-muted-foreground">Loading preview...</span>
+            </GlassCard>
+            <GlassCard className="flex min-h-[420px] items-center justify-center">
+              <span className="text-muted-foreground">Loading editor...</span>
+            </GlassCard>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="playground" className="relative overflow-hidden py-24 sm:py-32">
@@ -305,7 +349,7 @@ export function Playground() {
                   scrollBeyondLastLine: false,
                   automaticLayout: true,
                   padding: { top: 16 },
-                  fontFamily: "JetBrains Mono, ui-monospace, monospace",
+                  fontFamily: "SF Mono, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
                 }}
               />
             </div>
