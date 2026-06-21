@@ -5,9 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
-import { IphoneMockup } from "../components/iphone-mockup";
-import { CodeStrip } from "../components/code-strip";
-import { Play, Code, Sparkles, Smartphone, Info } from "lucide-react";
+import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
+import { Play, Code, Sparkles, Info } from "lucide-react";
 
 const demos = [
   {
@@ -104,25 +103,17 @@ export function Playground() {
 
   return (
     <section id="playground" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <IphoneMockup
-        className="right-4 top-12 z-0 hidden opacity-30 lg:block"
-        size="sm"
-        screen="swiftui"
-        float={false}
-      />
-      <IphoneMockup
-        className="left-4 bottom-20 z-0 hidden opacity-25 lg:block"
-        size="sm"
-        screen="code"
-        float
-      />
-      <CodeStrip className="top-[5%] left-0 z-0 hidden opacity-20 xl:block" reverse />
+      <OrbitPath className="-right-32 top-[10%] opacity-25" size={500} duration={75} color="mixed" />
+      <OrbitPath className="-left-24 bottom-[15%] opacity-20" size={420} duration={60} color="orange" reverse />
+      <Planet className="absolute right-[10%] top-[20%]" size={8} color="blue" />
+      <Planet className="absolute left-[12%] bottom-[25%]" size={6} color="orange" />
+      <Constellation className="right-[8%] bottom-[30%] hidden lg:block" count={8} />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Playground"
           title="SwiftUI in the browser"
-          description="An interactive demo of how MSF / MiniSwift can bring compiled SwiftUI artifacts to the web. When the binary is available, this area renders the real component."
+          description="An interactive demo of how compiled SwiftUI artifacts can feel on the web. When the binary is available, this area renders the real component."
         />
 
         <div className="grid gap-8 lg:grid-cols-2">
@@ -130,7 +121,7 @@ export function Playground() {
             <GlassCard glow="orange" className="h-full">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
-                  <Smartphone className="size-5 text-primary" />
+                  <Play className="size-5 text-primary" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground">Live preview</h3>
               </div>

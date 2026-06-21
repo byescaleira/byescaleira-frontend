@@ -4,50 +4,43 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
-import { IphoneMockup } from "../components/iphone-mockup";
-import { ExternalLink } from "lucide-react";
-import { Orbit, Wallet, Code, Hexagon } from "lucide-react";
+import { OrbitPath, Constellation } from "../components/space-orbits";
+import { CodeStrip } from "../components/code-strip";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const projects = [
   {
     codename: "Prism",
-    slug: "prism",
-    title: "Design System",
-    icon: Hexagon,
-    description:
-      "A personal design-system experiment: tokens, components, and patterns that bridge Figma and code with Apple-native aesthetics.",
-    status: "Experiment",
-    tags: ["Design Tokens", "Components", "SwiftUI"],
+    title: "Prism Design System",
+    description: "Tokens, components, and documentation for building consistent iOS interfaces.",
+    status: "In progress",
+    tags: ["SwiftUI", "Tokens", "SPM", "Documentation"],
+    href: "/project/prism",
   },
   {
     codename: "Orbit",
-    slug: "orbit",
-    title: "CLI / Automation",
-    icon: Orbit,
-    description:
-      "Automation tooling for repetitive engineering tasks — scaffolding, standardization, and release helpers that keep teams moving.",
-    status: "Active",
-    tags: ["CLI", "Automation", "Developer Experience"],
+    title: "Orbit CLI",
+    description: "Command-line automation for iOS projects — scaffolding, linting, releases.",
+    status: "In progress",
+    tags: ["Swift", "CLI", "Automation", "GitHub Actions"],
+    href: "/project/orbit",
   },
   {
     codename: "Cashly",
-    slug: "cashly",
-    title: "Finance App",
-    icon: Wallet,
-    description:
-      "A finance app concept focused on clarity, speed, and native iOS craft. Built to explore architecture and polished UX in a real product shape.",
-    status: "Concept",
-    tags: ["SwiftUI", "Architecture", "UX"],
+    title: "Cashly",
+    description: "A personal finance app exploring SwiftData, charts, and clean architecture.",
+    status: "Idea",
+    tags: ["SwiftUI", "SwiftData", "Charts", "Architecture"],
+    href: "/project/cashly",
   },
   {
     codename: "Open Source",
-    slug: "open-source",
-    title: "Experiments & Tools",
-    icon: Code,
-    description:
-      "Small tools, sample apps, and explorations shared on GitHub. Playgrounds for SwiftUI, concurrency patterns, and modular architecture.",
-    status: "Ongoing",
-    tags: ["Swift", "Samples", "GitHub"],
+    title: "Open source contributions",
+    description: "Utilities, articles, and examples shared with the iOS community.",
+    status: "Active",
+    tags: ["Swift", "Articles", "Examples"],
+    href: "/project/open-source",
   },
 ];
 
@@ -55,84 +48,77 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 },
+    transition: { staggerChildren: 0.08 },
   },
 };
 
-const item = {
+const projectCard = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0 },
 };
 
 export function PersonalProjects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const gridRef = useRef(null);
+  const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
 
   return (
     <section id="projects" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <IphoneMockup className="left-[2%] top-[8%] z-0 hidden opacity-30 xl:block" size="sm" screen="code" />
-      <IphoneMockup className="right-[3%] bottom-[10%] z-0 hidden opacity-30 xl:block" size="sm" screen="swiftui" />
+      <OrbitPath className="-left-28 top-16 opacity-25" size={440} duration={55} color="mixed" reverse />
+      <OrbitPath className="-right-24 bottom-20 opacity-20" size={400} duration={45} color="orange" />
+      <CodeStrip className="right-[6%] top-[30%] hidden w-52 rotate-3 opacity-15 lg:block" />
+      <Constellation className="left-[8%] bottom-[20%] hidden lg:block" count={10} />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow="Personal Projects"
-          title="Side missions"
-          description="Space-themed codenames for experiments that keep my craft sharp. Some ship, some teach, all are documented."
-          align="center"
+          eyebrow="Projects"
+          title="Personal work"
+          description="Side projects where I explore new ideas, tools, and craft without delivery pressure."
         />
 
         <motion.div
-          ref={ref}
+          ref={gridRef}
           variants={container}
           initial="hidden"
-          animate={isInView ? "show" : "hidden"}
+          animate={gridInView ? "show" : "hidden"}
           className="grid gap-6 sm:grid-cols-2"
         >
-          {projects.map((project) => {
-            const Icon = project.icon;
-            return (
-              <motion.div key={project.codename} variants={item}>
-                <a href={`/project/${project.slug}/`}>
-                  <GlassCard hover className="group h-full">
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                        <Icon className="size-6 text-primary" />
-                      </div>
-                      <span className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground">
-                        {project.status}
+          {projects.map((project, i) => (
+            <motion.div key={project.codename} variants={projectCard}>
+              <Link href={project.href} className="group block h-full">
+                <GlassCard
+                  hover
+                  glow={i % 2 === 0 ? "orange" : "blue"}
+                  className="h-full"
+                >
+                  <div className="mb-4 flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                        {project.codename[0]}
                       </span>
-                    </div>
-
-                    <div className="mb-2 flex items-baseline gap-2">
-                      <span className="text-sm font-medium text-primary">{project.codename}</span>
-                      <div className="flex items-center gap-1">
-                        <h3 className="text-xl font-semibold text-foreground">{project.title}</h3>
-                        <ExternalLink className="size-4 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+                      <div>
+                        <h3 className="font-semibold text-foreground transition-colors group-hover:text-primary">{project.title}</h3>
+                        <span className="text-xs text-muted-foreground">{project.status}</span>
                       </div>
                     </div>
+                    <ArrowUpRight className="size-5 text-muted-foreground transition-all group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
 
-                    <p className="mb-5 leading-relaxed text-muted-foreground">{project.description}</p>
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
 
-                    <div className="mb-5 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors group-hover:text-pulsar">
-                      Read more
-                      <ExternalLink className="size-4" />
-                    </span>
-                  </GlassCard>
-                </a>
-              </motion.div>
-            );
-          })}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </GlassCard>
+              </Link>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

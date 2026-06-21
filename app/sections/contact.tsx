@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
-import { IphoneMockup } from "../components/iphone-mockup";
+import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "../components/icons";
 
@@ -49,8 +49,11 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <IphoneMockup className="left-[2%] top-[10%] z-0 hidden opacity-30 xl:block" size="sm" screen="gradient" />
-      <IphoneMockup className="right-[3%] bottom-[5%] z-0 hidden opacity-25 xl:block" size="sm" screen="code" />
+      <OrbitPath className="-left-28 top-[5%] opacity-25" size={460} duration={60} color="mixed" reverse />
+      <OrbitPath className="-right-24 bottom-[10%] opacity-20" size={420} duration={50} color="orange" />
+      <Planet className="absolute right-[12%] top-[15%]" size={7} color="orange" />
+      <Planet className="absolute left-[10%] bottom-[20%]" size={6} color="blue" />
+      <Constellation className="left-[6%] top-[30%] hidden lg:block" count={10} />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         <SectionHeading
@@ -141,15 +144,6 @@ export function Contact() {
             );
           })}
         </motion.div>
-
-        <ScrollReveal delay={0.2}>
-          <div className="mt-12 flex flex-col items-center justify-center gap-3 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Calendar className="size-4 text-primary" />
-              <span>Prefer async first, then a call when it matters.</span>
-            </div>
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );
