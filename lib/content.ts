@@ -57,9 +57,9 @@ export const experiences: Experience[] = [
     company: "Deliver IT / Letsbank",
     codename: "Letsbank",
     role: "iOS Developer",
-    period: "Fintech mobile apps",
+    period: "Fintech",
     location: "Brazil",
-    focus: "Fintech iOS apps",
+    focus: "iOS, security, modular fintech features",
     summary:
       "Built iOS features for Letsbank, a fintech environment where security, reliability, and clean user flows matter. Worked on payment flows, account screens, and modular feature architecture.",
     responsibilities: [
@@ -81,7 +81,7 @@ export const experiences: Experience[] = [
     role: "iOS Developer",
     period: "Product growth",
     location: "Brazil",
-    focus: "Product growth",
+    focus: "Growth, onboarding, A/B experiments",
     summary:
       "Worked on product growth initiatives for Next, experimenting with engagement mechanics, onboarding improvements, and feature iteration cycles.",
     responsibilities: [
@@ -101,9 +101,9 @@ export const experiences: Experience[] = [
     company: "TocaLivros",
     codename: "Toca",
     role: "Mobile Developer",
-    period: "Edtech platform",
+    period: "Edtech",
     location: "Brazil",
-    focus: "Edtech platform",
+    focus: "Reading and content discovery",
     summary:
       "Developed mobile features for TocaLivros, an education platform. Focused on student engagement, content discovery, and cross-platform consistency where native performance was required.",
     responsibilities: [
@@ -122,9 +122,9 @@ export const experiences: Experience[] = [
     company: "Boviplan",
     codename: "Bovi",
     role: "Mobile Developer",
-    period: "Agtech tools",
+    period: "Agtech",
     location: "Brazil",
-    focus: "Agtech tools",
+    focus: "Offline-first field tools",
     summary:
       "Built mobile tools for Boviplan, an agtech product used by ranchers and field teams. The challenge was reliable data capture, offline handling, and simple UX in rough environments.",
     responsibilities: [
@@ -143,7 +143,7 @@ export const experiences: Experience[] = [
     company: "A.A.A. UFMS",
     codename: "TripleA",
     role: "Developer",
-    period: "University athletic association",
+    period: "University",
     location: "Campo Grande, MS",
     focus: "Internal tooling",
     summary:
