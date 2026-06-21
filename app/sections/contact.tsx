@@ -66,13 +66,22 @@ export function Contact() {
 
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
-                href="https://www.linkedin.com/in/rafael-eescaleira"
+                href="https://calendly.com/byescaleira"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-nebula px-6 text-sm font-medium text-white transition-colors hover:bg-nebula/90"
               >
+                <Calendar className="size-4" />
+                Schedule a conversation
+              </a>
+              <a
+                href="https://www.linkedin.com/in/rafael-eescaleira"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight transition-colors hover:bg-white/[0.08]"
+              >
                 <LinkedinIcon className="size-4" />
-                Connect on LinkedIn
+                LinkedIn
               </a>
               <a
                 href="https://github.com/byescaleira"
@@ -81,7 +90,7 @@ export function Contact() {
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight transition-colors hover:bg-white/[0.08]"
               >
                 <GithubIcon className="size-4" />
-                View GitHub
+                GitHub
               </a>
               <a
                 href="https://x.com/byescaleira"
@@ -90,7 +99,7 @@ export function Contact() {
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 text-sm font-medium text-starlight transition-colors hover:bg-white/[0.08]"
               >
                 <XIcon className="size-4" />
-                X / Twitter
+                X
               </a>
             </div>
           </GlassCard>
