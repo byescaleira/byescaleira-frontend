@@ -4,7 +4,6 @@ import { ScrollReveal } from "../components/scroll-reveal";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { OrbitPath, Constellation } from "../components/space-orbits";
-import { CodeStrip } from "../components/code-strip";
 import { GraduationCap, Rocket, Target, Sparkles } from "lucide-react";
 
 const careerSteps = [
@@ -18,26 +17,10 @@ const careerSteps = [
 ];
 
 const principles = [
-  {
-    icon: Rocket,
-    title: "Ship first, polish after",
-    description: "Working software beats perfect branches. I ship small, learn fast, and refine with real usage.",
-  },
-  {
-    icon: Sparkles,
-    title: "AI writes fast. I decide slow",
-    description: "AI accelerates the craft; human judgment owns the consequences. Every line gets reviewed.",
-  },
-  {
-    icon: Target,
-    title: "Design is engineering",
-    description: "Spacing, motion, and typography are technical decisions. A beautiful UI is a well-architected one.",
-  },
-  {
-    icon: Rocket,
-    title: "Native first, always",
-    description: "Apple's APIs come before abstractions. No cross-platform shortcuts when the product deserves native.",
-  },
+  { icon: Rocket, title: "Ship first, polish after", description: "Working software beats perfect branches. I ship small, learn fast, and refine with real usage." },
+  { icon: Sparkles, title: "AI writes fast. I decide slow", description: "AI accelerates the craft; human judgment owns the consequences. Every line gets reviewed." },
+  { icon: Target, title: "Design is engineering", description: "Spacing, motion, and typography are technical decisions. A beautiful UI is a well-architected one." },
+  { icon: Rocket, title: "Native first, always", description: "Apple's APIs come before abstractions. No cross-platform shortcuts when the product deserves native." },
 ];
 
 const education = [
@@ -48,10 +31,9 @@ const education = [
 export function About() {
   return (
     <section id="about" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-right-24 top-12 opacity-25" size={420} duration={60} color="mixed" />
-      <OrbitPath className="-left-16 bottom-24 opacity-20" size={340} duration={45} color="orange" reverse />
-      <CodeStrip className="right-[8%] top-[20%] hidden w-44 rotate-6 opacity-15 lg:block" />
-      <Constellation className="left-[6%] top-[30%] hidden lg:block" count={10} />
+      <OrbitPath className="-right-24 top-12 opacity-25" size={420} duration={60} color="mixed" satellites={2} />
+      <OrbitPath className="-left-16 bottom-24 opacity-20" size={340} duration={45} color="orange" reverse satellites={2} />
+      <Constellation className="left-[6%] top-[30%] hidden opacity-60 lg:block" count={10} />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
@@ -63,9 +45,7 @@ export function About() {
         <div className="grid gap-8 lg:grid-cols-5">
           <ScrollReveal className="lg:col-span-3">
             <GlassCard glow="orange" className="h-full">
-              <h3 className="mb-6 flex items-center gap-2 text-lg font-semibold text-foreground">
-                Career path
-              </h3>
+              <h3 className="mb-6 text-lg font-semibold text-foreground">Career path</h3>
               <div className="relative">
                 <div className="absolute top-0 bottom-0 left-[7px] w-px bg-gradient-to-b from-primary/60 via-primary/20 to-transparent" />
                 <div className="space-y-6">
@@ -86,9 +66,7 @@ export function About() {
                               <span className="text-xs font-medium text-primary">{step.period}</span>
                             )}
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground">{step.role}</span>
-                          </div>
+                          <div className="text-sm text-muted-foreground">{step.role}</div>
                         </div>
                       </div>
                     </ScrollReveal>
@@ -123,7 +101,7 @@ export function About() {
             <ScrollReveal delay={0.2}>
               <GlassCard glow="blue">
                 <h3 className="mb-5 text-lg font-semibold text-foreground">Working principles</h3>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="grid gap-4">
                   {principles.map((principle) => {
                     const Icon = principle.icon;
                     return (

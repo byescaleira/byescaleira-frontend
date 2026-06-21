@@ -103,11 +103,11 @@ export function Playground() {
 
   return (
     <section id="playground" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-right-32 top-[10%] opacity-25" size={500} duration={75} color="mixed" />
-      <OrbitPath className="-left-24 bottom-[15%] opacity-20" size={420} duration={60} color="orange" reverse />
+      <OrbitPath className="-right-32 top-[10%] opacity-25" size={500} duration={75} color="mixed" satellites={3} />
+      <OrbitPath className="-left-24 bottom-[15%] opacity-20" size={420} duration={60} color="orange" reverse satellites={2} />
       <Planet className="absolute right-[10%] top-[20%]" size={8} color="blue" />
       <Planet className="absolute left-[12%] bottom-[25%]" size={6} color="orange" />
-      <Constellation className="right-[8%] bottom-[30%] hidden lg:block" count={8} />
+      <Constellation className="right-[8%] bottom-[30%] hidden opacity-50 lg:block" count={8} />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading

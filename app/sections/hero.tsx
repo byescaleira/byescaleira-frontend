@@ -4,8 +4,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "../components/icons";
 import { ScrollProgress } from "../components/scroll-progress";
-import { OrbitPath, Planet } from "../components/space-orbits";
-import { CodeStrip } from "../components/code-strip";
+import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -21,38 +20,40 @@ export function Hero() {
     >
       <ScrollProgress />
 
-      {/* Background orbit system */}
+      {/* Central orbital system behind headline */}
       <OrbitPath
-        className="-left-32 top-1/4 hidden opacity-40 md:block"
-        size={520}
-        duration={50}
+        className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30"
+        size={700}
+        duration={100}
+        color="mixed"
+        thickness={1.2}
+        satellites={3}
+      />
+      <OrbitPath
+        className="-left-24 top-1/4 opacity-40 md:left-[5%]"
+        size={420}
+        duration={55}
         color="orange"
         reverse
+        satellites={2}
       />
       <OrbitPath
-        className="-right-40 top-1/3 hidden opacity-30 md:block"
-        size={640}
+        className="-right-24 top-1/3 opacity-35 md:right-[8%]"
+        size={520}
         duration={70}
-        color="mixed"
-      />
-      <OrbitPath
-        className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"
-        size={900}
-        duration={120}
         color="blue"
-        thickness={0.5}
+        satellites={2}
       />
 
-      {/* Floating code strips as distant asteroids/comets */}
-      <CodeStrip className="left-[5%] top-[20%] z-0 hidden w-48 rotate-[-8deg] opacity-15 lg:block" reverse />
-      <CodeStrip className="right-[8%] top-[15%] z-0 hidden w-44 rotate-[6deg] opacity-15 lg:block" />
-      <CodeStrip className="right-[12%] bottom-[22%] z-0 hidden w-52 rotate-[-4deg] opacity-15 lg:block" reverse />
+      <Constellation className="left-[8%] top-[22%] opacity-60" count={6} />
+      <Constellation className="right-[10%] bottom-[25%] opacity-50" count={8} />
 
-      {/* Planets / stars */}
-      <Planet className="absolute top-[18%] left-[12%]" size={8} color="orange" />
-      <Planet className="absolute top-[12%] right-[20%]" size={6} color="blue" />
-      <Planet className="absolute bottom-[28%] left-[18%]" size={5} color="muted" />
-      <Planet className="absolute bottom-[20%] right-[15%]" size={10} color="orange" />
+      <Planet className="absolute top-[16%] left-[12%]" size={10} color="orange" />
+      <Planet className="absolute top-[12%] right-[22%]" size={7} color="blue" />
+      <Planet className="absolute bottom-[30%] left-[18%]" size={6} color="muted" />
+      <Planet className="absolute bottom-[22%] right-[16%]" size={11} color="orange" />
+      <Planet className="absolute top-[42%] right-[6%] hidden md:block" size={5} color="blue" />
+      <Planet className="absolute bottom-[40%] left-[4%] hidden md:block" size={4} color="orange" />
 
       <motion.div
         style={{ opacity, scale, y: smoothY }}

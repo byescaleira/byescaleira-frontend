@@ -3,7 +3,7 @@
 import { SectionHeading } from "../components/section-heading";
 import { ScrollReveal } from "../components/scroll-reveal";
 import { GlassCard } from "../components/glass-card";
-import { OrbitPath, Planet } from "../components/space-orbits";
+import { OrbitPath, Planet, OrbitNode } from "../components/space-orbits";
 import { ArrowRight, Trophy, Zap, Users, Target } from "lucide-react";
 import Link from "next/link";
 
@@ -26,10 +26,11 @@ const tags = ["Swift", "SwiftUI", "UIKit", "Clean Architecture", "Swift Concurre
 export function ProfessionalWork() {
   return (
     <section id="work" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-right-28 top-20 opacity-25" size={480} duration={65} color="orange" />
-      <OrbitPath className="-left-20 bottom-20 opacity-20" size={360} duration={50} color="mixed" reverse />
+      <OrbitPath className="-right-28 top-20 opacity-25" size={480} duration={65} color="orange" satellites={3} />
+      <OrbitPath className="-left-20 bottom-20 opacity-20" size={360} duration={50} color="mixed" reverse satellites={2} />
       <Planet className="absolute right-[15%] top-[10%]" size={7} color="orange" />
       <Planet className="absolute left-[12%] bottom-[30%]" size={5} color="blue" />
+      <OrbitNode className="absolute right-[8%] bottom-[25%]" label="Current" active color="orange" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         <SectionHeading
@@ -74,10 +75,7 @@ export function ProfessionalWork() {
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground"
-                  >
+                  <span key={tag} className="rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
                     {tag}
                   </span>
                 ))}

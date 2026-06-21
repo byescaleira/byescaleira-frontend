@@ -11,6 +11,7 @@ interface OrbitPathProps {
   opacity?: number;
   color?: "orange" | "blue" | "mixed";
   thickness?: number;
+  satellites?: number;
 }
 
 export function OrbitPath({
@@ -18,22 +19,16 @@ export function OrbitPath({
   size = 400,
   duration = 30,
   reverse = false,
-  opacity = 0.35,
+  opacity = 0.55,
   color = "orange",
-  thickness = 1,
+  thickness = 1.5,
+  satellites = 2,
 }: OrbitPathProps) {
   const { scrollY } = useScroll();
-  const rotate = useTransform(scrollY, [0, 1500], reverse ? [0, -90] : [0, 90]);
-  const smoothRotate = useSpring(rotate, { stiffness: 50, damping: 30 });
+  const rotate = useTransform(scrollY, [0, 1200], reverse ? [0, -120] : [0, 120]);
+  const smoothRotate = useSpring(rotate, { stiffness: 60, damping: 30 });
 
-  const strokeColor =
-    color === "orange"
-      ? "rgba(255,107,0,OPACITY)"
-      : color === "blue"
-        ? "rgba(59,130,246,OPACITY)"
-        : "url(#mixedGradient)";
-
-  const resolvedStroke = strokeColor.replace("OPACITY", String(opacity));
+  const gradientId = `orbitGradient-${Math.random().toString(36).slice(2, 9)}`;
 
   return (
     <motion.div
@@ -48,10 +43,10 @@ export function OrbitPath({
         className="overflow-visible"
       >
         <defs>
-          <linearGradient id="mixedGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255,107,0,0.5)" />
-            <stop offset="60%" stopColor="rgba(59,130,246,0.3)" />
-            <stop offset="100%" stopColor="rgba(255,107,0,0.1)" />
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={color === "blue" ? "rgba(59,130,246,0.7)" : "rgba(255,107,0,0.7)"} />
+            <stop offset="50%" stopColor={color === "blue" ? "rgba(59,130,246,0.4)" : "rgba(255,140,0,0.45)"} />
+            <stop offset="100%" stopColor={color === "blue" ? "rgba(59,130,246,0.1)" : "rgba(255,107,0,0.1)"} />
           </linearGradient>
         </defs>
 
@@ -61,9 +56,9 @@ export function OrbitPath({
           cy={size / 2}
           r={size * 0.46}
           fill="none"
-          stroke={resolvedStroke}
+          stroke={`url(#${gradientId})`}
           strokeWidth={thickness}
-          strokeDasharray={`${size * 0.04} ${size * 0.06}`}
+          strokeDasharray={`${size * 0.05} ${size * 0.04}`}
           opacity={opacity}
         />
 
@@ -71,9 +66,9 @@ export function OrbitPath({
         <circle
           cx={size / 2}
           cy={size / 2}
-          r={size * 0.34}
+          r={size * 0.32}
           fill="none"
-          stroke={resolvedStroke}
+          stroke={color === "blue" ? "rgba(59,130,246,OPACITY)" : "rgba(255,107,0,OPACITY)"}
           strokeWidth={thickness * 0.7}
           opacity={opacity * 0.7}
         />
@@ -82,48 +77,148 @@ export function OrbitPath({
         <circle
           cx={size / 2}
           cy={size / 2}
-          r={size * 0.22}
+          r={size * 0.18}
           fill="none"
-          stroke={resolvedStroke}
+          stroke={color === "blue" ? "rgba(59,130,246,OPACITY)" : "rgba(255,107,0,OPACITY)"}
           strokeWidth={thickness * 0.6}
-          strokeDasharray={`${size * 0.01} ${size * 0.04}`}
+          strokeDasharray={`${size * 0.01} ${size * 0.03}`}
           opacity={opacity * 0.5}
         />
 
-        {/* Satellites orbiting on rings */}
-        {[0.46, 0.34, 0.22].map((ratio, i) => (
-          <motion.circle
-            key={i}
-            cx={size / 2}
-            cy={size / 2}
-            r={size * 0.02}
-            fill="rgba(255,107,0,0.8)"
-            animate={{
-              cx: [
-                size / 2 + size * ratio * Math.cos(0),
-                size / 2 + size * ratio * Math.cos(Math.PI / 2),
-                size / 2 + size * ratio * Math.cos(Math.PI),
-                size / 2 + size * ratio * Math.cos((3 * Math.PI) / 2),
-                size / 2 + size * ratio * Math.cos(2 * Math.PI),
-              ],
-              cy: [
-                size / 2 + size * ratio * Math.sin(0),
-                size / 2 + size * ratio * Math.sin(Math.PI / 2),
-                size / 2 + size * ratio * Math.sin(Math.PI),
-                size / 2 + size * ratio * Math.sin((3 * Math.PI) / 2),
-                size / 2 + size * ratio * Math.sin(2 * Math.PI),
-              ],
-            }}
-            transition={{
-              duration: duration + i * 8,
-              repeat: Infinity,
-              ease: "linear",
-              delay: i * 1.5,
-            }}
-          />
-        ))}
+        {/* Satellites */}
+        {Array.from({ length: satellites }).map((_, i) => {
+          const ringRatio = [0.46, 0.32, 0.18][i % 3];
+          const orbitDuration = duration + i * 10;
+          return (
+            <motion.circle
+              key={i}
+              cx={size / 2}
+              cy={size / 2}
+              r={Math.max(4, size * 0.012)}
+              fill={color === "blue" ? "#60A5FA" : "#FF6B00"}
+              animate={{
+                cx: Array.from({ length: 5 }, (_, k) =>
+                  size / 2 + size * ringRatio * Math.cos((k * Math.PI * 2) / 4)
+                ),
+                cy: Array.from({ length: 5 }, (_, k) =>
+                  size / 2 + size * ringRatio * Math.sin((k * Math.PI * 2) / 4)
+                ),
+              }}
+              transition={{
+                duration: orbitDuration,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                filter: `drop-shadow(0 0 ${size * 0.02}px ${color === "blue" ? "#60A5FA" : "#FF6B00"})`,
+              }}
+            />
+          );
+        })}
       </svg>
     </motion.div>
+  );
+}
+
+interface OrbitNodeProps {
+  className?: string;
+  label?: string;
+  active?: boolean;
+  color?: "orange" | "blue";
+}
+
+export function OrbitNode({ className, label, active = false, color = "orange" }: OrbitNodeProps) {
+  return (
+    <div
+      className={cn(
+        "pointer-events-none absolute flex flex-col items-center",
+        className
+      )}
+      aria-hidden="true"
+    >
+      <motion.div
+        className={cn(
+          "rounded-full border-2",
+          color === "orange"
+            ? active
+              ? "border-primary bg-primary"
+              : "border-primary/50 bg-background"
+            : active
+              ? "border-blue-500 bg-blue-500"
+              : "border-blue-500/50 bg-background"
+        )}
+        animate={{ scale: active ? [1, 1.2, 1] : [1, 1.05, 1] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        style={{ width: active ? 16 : 12, height: active ? 16 : 12 }}
+      />
+      {label && (
+        <span className="mt-2 text-[10px] uppercase tracking-wider text-muted-foreground">{label}</span>
+      )}
+    </div>
+  );
+}
+
+interface ConstellationProps {
+  className?: string;
+  count?: number;
+  connected?: boolean;
+}
+
+export function Constellation({ className, count = 8, connected = true }: ConstellationProps) {
+  const points = Array.from({ length: count }).map((_, i) => {
+    const angle = (i / count) * Math.PI * 2;
+    const r = 70 + Math.random() * 40;
+    return {
+      x: Math.cos(angle) * r + 100,
+      y: Math.sin(angle) * r + 100,
+      delay: Math.random() * 2,
+    };
+  });
+
+  return (
+    <svg
+      width={200}
+      height={200}
+      viewBox="0 0 200 200"
+      className={cn("pointer-events-none absolute overflow-visible", className)}
+      aria-hidden="true"
+    >
+      {connected &&
+        points.map((p, i) => {
+          const next = points[(i + 1) % points.length];
+          return (
+            <motion.line
+              key={`line-${i}`}
+              x1={p.x}
+              y1={p.y}
+              x2={next.x}
+              y2={next.y}
+              stroke="rgba(255,107,0,0.25)"
+              strokeWidth={1}
+              strokeDasharray="4 4"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 2, delay: p.delay }}
+            />
+          );
+        })}
+      {points.map((p, i) => (
+        <motion.circle
+          key={i}
+          cx={p.x}
+          cy={p.y}
+          r={3}
+          fill="rgba(255,107,0,0.8)"
+          animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.4, 1] }}
+          transition={{
+            duration: 3 + Math.random() * 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: p.delay,
+          }}
+        />
+      ))}
+    </svg>
   );
 }
 
@@ -135,57 +230,68 @@ interface PlanetProps {
 }
 
 export function Planet({ className, size = 12, color = "orange", glow = true }: PlanetProps) {
-  const colorClass =
+  const fill =
     color === "orange"
-      ? "bg-primary"
+      ? "#FF6B00"
       : color === "blue"
-        ? "bg-blue-500"
-        : "bg-muted-foreground";
+        ? "#3B82F6"
+        : "#64748B";
 
   return (
     <motion.div
-      className={cn("rounded-full", colorClass, className)}
+      className={cn("rounded-full", className)}
       style={{
         width: size,
         height: size,
-        boxShadow: glow ? `0 0 ${size * 1.5}px ${size * 0.5}px var(--pulsar)` : undefined,
+        background: `radial-gradient(circle at 30% 30%, ${fill}, ${fill}88)`,
+        boxShadow: glow ? `0 0 ${size * 1.8}px ${size * 0.6}px ${fill}66` : undefined,
       }}
-      animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+      animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
       transition={{ duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
       aria-hidden="true"
     />
   );
 }
 
-interface ConstellationProps {
+interface SectionOrbitRingProps {
   className?: string;
-  count?: number;
+  sectionProgress?: number;
+  color?: "orange" | "blue";
 }
 
-export function Constellation({ className, count = 8 }: ConstellationProps) {
+export function SectionOrbitRing({ className, sectionProgress = 0, color = "orange" }: SectionOrbitRingProps) {
+  const size = 320;
+  const stroke = color === "orange" ? "#FF6B00" : "#3B82F6";
+  const circumference = 2 * Math.PI * (size * 0.45);
+  const progressOffset = circumference * (1 - Math.min(1, Math.max(0, sectionProgress)));
+
   return (
     <div className={cn("pointer-events-none absolute", className)} aria-hidden="true">
-      {Array.from({ length: count }).map((_, i) => {
-        const angle = (i / count) * Math.PI * 2;
-        const r = 60 + Math.random() * 40;
-        return (
-          <motion.div
-            key={i}
-            className="absolute size-1 rounded-full bg-primary/50"
-            style={{
-              left: Math.cos(angle) * r + 80,
-              top: Math.sin(angle) * r + 80,
-            }}
-            animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.4, 1] }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 2,
-            }}
-          />
-        );
-      })}
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+        {/* Track */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={size * 0.45}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={2}
+          opacity={0.12}
+        />
+        {/* Progress arc */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={size * 0.45}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={progressOffset}
+          opacity={0.6}
+        />
+      </svg>
     </div>
   );
 }
