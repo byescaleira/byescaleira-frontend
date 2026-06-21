@@ -7,34 +7,43 @@ import { GlassCard } from "../components/glass-card";
 import { Play, RefreshCw, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
+import { useTheme } from "next-themes";
 
 const Editor = dynamic(() => import("@monaco-editor/react").then((mod) => mod.default), { ssr: false });
 
-// Custom Monaco theme matching the site palette
-const defineByescaleiraTheme = (monaco: typeof import("monaco-editor")) => {
-  monaco.editor.defineTheme("byescaleira", {
+// Xcode Dark theme for Monaco
+const defineXcodeDarkTheme = (monaco: typeof import("monaco-editor")) => {
+  monaco.editor.defineTheme("xcode-dark", {
     base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "comment", foreground: "6B7280", fontStyle: "italic" },
-      { token: "keyword", foreground: "FF8C42" },
-      { token: "string", foreground: "93C5FD" },
-      { token: "number", foreground: "A78BFA" },
-      { token: "type", foreground: "FDBA74" },
-      { token: "identifier", foreground: "F8FAFC" },
-      { token: "function", foreground: "FB923C" },
-      { token: "operator", foreground: "FF6B00" },
+      { token: "comment", foreground: "6A9955", fontStyle: "italic" },
+      { token: "keyword", foreground: "FF7B72" },
+      { token: "string", foreground: "CE9178" },
+      { token: "number", foreground: "B5CEA8" },
+      { token: "type", foreground: "FFEC8B" },
+      { token: "identifier", foreground: "DCDCAA" },
+      { token: "function", foreground: "DCDCAA" },
+      { token: "operator", foreground: "D4D4D4" },
+      { token: "delimiter", foreground: "D4D4D4" },
+      { token: "tag", foreground: "569CD6" },
+      { token: "attribute.name", foreground: "9CDCFE" },
+      { token: "attribute.value", foreground: "CE9178" },
+      { token: "keyword.flow", foreground: "C586C0" },
+      { token: "keyword.type", foreground: "569CD6" },
     ],
     colors: {
-      "editor.background": "0B0F19",
-      "editor.lineHighlightBackground": "111827",
-      "editorLineNumber.foreground": "6B7280",
-      "editorLineNumber.activeForeground": "FF6B00",
-      "editor.selectionBackground": "FF6B0033",
-      "editor.inactiveSelectionBackground": "FF6B0022",
-      "editorCursor.foreground": "FF6B00",
-      "editorBracketMatch.background": "FF6B0022",
-      "editorBracketMatch.border": "FF6B00",
+      "editor.background": "1E1E1E",
+      "editor.lineHighlightBackground": "2A2D2E",
+      "editorLineNumber.foreground": "858585",
+      "editorLineNumber.activeForeground": "D4D4D4",
+      "editor.selectionBackground": "264F78",
+      "editor.inactiveSelectionBackground": "264F7855",
+      "editorCursor.foreground": "A6A6A6",
+      "editorBracketMatch.background": "0064001A",
+      "editorBracketMatch.border": "B4B4B4",
+      "editor.wordHighlightBackground": "575757B8",
+      "editor.wordHighlightStrongBackground": "004972A8",
     },
   });
 };
@@ -90,6 +99,7 @@ function translateSwiftToPreview(code: string): React.ReactNode {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+
     if (/background\(:?\.ultraThinMaterial\)/.test(line)) continue;
     if (/cornerRadius\((\d+)\)/.test(line)) continue;
     if (/padding\((\d+)\)/.test(line)) continue;
@@ -114,7 +124,12 @@ function translateSwiftToPreview(code: string): React.ReactNode {
       output.push(
         <span
           key={key++}
-          className={cn(classes, secondary && "text-white/60", primary && "text-white", !secondary && !primary && "text-white")}
+          className={cn(
+            classes,
+            secondary && "text-muted-foreground",
+            primary && "text-foreground",
+            !secondary && !primary && "text-foreground"
+          )}
         >
           {content}
         </span>
@@ -124,13 +139,15 @@ function translateSwiftToPreview(code: string): React.ReactNode {
 
     if (isButton(line)) {
       const label = buttonLabel(line);
-      const tint = /tint\(:?\.orange\)/.test(code) ? "bg-orange-500 hover:bg-orange-600" : "bg-zinc-100 text-zinc-900 hover:bg-zinc-200";
+      const tint = /tint\(:?\.orange\)/.test(code)
+        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+        : "bg-secondary text-secondary-foreground hover:bg-secondary/80";
       output.push(
         <motion.button
           key={key++}
           whileTap={{ scale: 0.96 }}
           whileHover={{ scale: 1.02 }}
-          className={cn("mt-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors", tint)}
+          className={cn("mt-1 inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors", tint)}
         >
           {label}
         </motion.button>
@@ -144,7 +161,7 @@ function translateSwiftToPreview(code: string): React.ReactNode {
       output.push(
         <motion.div
           key={key++}
-          className="rounded-full bg-orange-500 shadow-[0_0_24px_rgba(255,107,0,0.6)]"
+          className="rounded-full bg-primary shadow-[0_0_24px_rgba(255,107,0,0.6)]"
           style={{ width: size, height: size }}
           animate={{ scale: [1, 1.3, 1] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -158,9 +175,13 @@ function translateSwiftToPreview(code: string): React.ReactNode {
 }
 
 export function Playground() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [activeId, setActiveId] = useState<DemoId>("glassCard");
   const [editorCode, setEditorCode] = useState(demos[0].swiftCode);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => setMounted(true), []);
 
   const activeDemo = useMemo(() => demos.find((d) => d.id === activeId) ?? demos[0], [activeId]);
 
@@ -185,6 +206,8 @@ export function Playground() {
     setError(null);
   }, [activeDemo]);
 
+  if (!mounted) return null;
+
   return (
     <section id="playground" className="relative overflow-hidden py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -196,9 +219,9 @@ export function Playground() {
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
           <GlassCard className="relative flex min-h-[420px] flex-col p-0 overflow-hidden">
-            <div className="flex items-center justify-between border-b border-white/10 bg-black/20 px-4 py-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-white/80">
-                <Play className="h-4 w-4 text-orange-500" />
+            <div className="flex items-center justify-between border-b border-border bg-card/50 px-4 py-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground/80">
+                <Play className="h-4 w-4 text-primary" />
                 Live preview
               </div>
               <div className="flex gap-2">
@@ -208,7 +231,9 @@ export function Playground() {
                     onClick={() => setActiveId(demo.id)}
                     className={cn(
                       "rounded-md px-3 py-1.5 text-xs font-medium transition-all",
-                      activeId === demo.id ? "bg-orange-500 text-white shadow-[0_0_12px_rgba(255,107,0,0.4)]" : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                      activeId === demo.id
+                        ? "bg-primary text-primary-foreground shadow-[0_0_12px_rgba(255,107,0,0.4)]"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                     )}
                   >
                     {demo.label}
@@ -217,9 +242,9 @@ export function Playground() {
               </div>
             </div>
 
-            <div className="relative flex flex-1 items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-800/40 via-zinc-950 to-zinc-950 p-8">
+            <div className="relative flex flex-1 items-center justify-center bg-background p-8">
               {error ? (
-                <div className="flex items-center gap-3 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <div className="flex items-center gap-3 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
                   <AlertCircle className="h-4 w-4" />
                   {error}
                 </div>
@@ -233,10 +258,10 @@ export function Playground() {
                     transition={{ duration: 0.25 }}
                     className="flex flex-col items-center"
                   >
-                    <div className="rounded-[20px] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-md flex flex-col gap-3">
+                    <div className="rounded-[20px] border border-border bg-card p-6 shadow-2xl backdrop-blur-md flex flex-col gap-3">
                       {preview}
                     </div>
-                    <p className="mt-4 max-w-xs text-center text-xs text-white/40">
+                    <p className="mt-4 max-w-xs text-center text-xs text-muted-foreground">
                       {activeDemo.description}
                     </p>
                   </motion.div>
@@ -244,34 +269,34 @@ export function Playground() {
               )}
             </div>
 
-            <div className="border-t border-white/10 px-4 py-2 text-[10px] text-white/30">
+            <div className="border-t border-border px-4 py-2 text-[10px] text-muted-foreground/60">
               React preview · Swift compiler integration via SwiftWasm planned
             </div>
           </GlassCard>
 
           <GlassCard className="relative flex min-h-[420px] flex-col p-0 overflow-hidden">
-            <div className="flex items-center justify-between border-b border-white/10 bg-black/20 px-4 py-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-white/80">
-                <span className="font-mono text-xs text-orange-500">.swift</span>
+            <div className="flex items-center justify-between border-b border-border bg-card/50 px-4 py-3">
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground/80">
+                <span className="font-mono text-xs text-primary">.swift</span>
                 Source
               </div>
               <button
                 onClick={resetDemo}
-                className="flex items-center gap-1.5 rounded-md bg-white/5 px-2.5 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+                className="flex items-center gap-1.5 rounded-md bg-muted px-2.5 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground"
               >
                 <RefreshCw className="h-3 w-3" />
                 Reset
               </button>
             </div>
 
-            <div className="flex-1 bg-[#0d1117]">
+            <div className="flex-1 bg-[#1E1E1E]">
               <Editor
                 height="100%"
                 language="swift"
-                theme="byescaleira"
+                theme="xcode-dark"
                 value={editorCode}
                 onChange={(value) => setEditorCode(value ?? "")}
-                beforeMount={defineByescaleiraTheme}
+                beforeMount={defineXcodeDarkTheme}
                 options={{
                   minimap: { enabled: false },
                   fontSize: 13,
@@ -287,7 +312,7 @@ export function Playground() {
           </GlassCard>
         </div>
 
-        <p className="mt-6 text-center text-xs text-white/40">
+        <p className="mt-6 text-center text-xs text-muted-foreground">
           Editing the source updates the preview immediately. A real Swift compiler in the browser
           requires SwiftWasm + a backend endpoint — that is the next engineering milestone.
         </p>
