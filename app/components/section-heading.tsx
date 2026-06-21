@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -15,8 +16,12 @@ export function SectionHeading({
   description,
   align = "left",
 }: SectionHeadingProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
     <div
+      ref={ref}
       className={`mb-12 md:mb-16 ${
         align === "center" ? "text-center" : "text-left"
       }`}
@@ -24,8 +29,7 @@ export function SectionHeading({
       {eyebrow && (
         <motion.span
           initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
           transition={{ duration: 0.5 }}
           className="mb-3 inline-block text-xs font-medium uppercase tracking-[0.2em] text-nebula"
         >
@@ -34,8 +38,7 @@ export function SectionHeading({
       )}
       <motion.h2
         initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
         transition={{ duration: 0.6, delay: 0.1 }}
         className="font-heading text-3xl font-semibold tracking-tight text-starlight md:text-4xl lg:text-5xl"
       >
@@ -44,8 +47,7 @@ export function SectionHeading({
       {description && (
         <motion.p
           initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className={`mt-4 max-w-2xl text-lg leading-relaxed text-orbit ${
             align === "center" ? "mx-auto" : ""

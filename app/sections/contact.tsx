@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import { ScrollReveal } from "../components/scroll-reveal";
@@ -34,7 +35,23 @@ const contacts = [
   },
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+const contactItem = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0 },
+};
+
 export function Contact() {
+  const gridRef = useRef(null);
+  const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
+
   return (
     <section id="contact" className="relative px-6 py-24 md:px-12 md:py-32">
       <div className="mx-auto max-w-4xl text-center">
@@ -75,16 +92,10 @@ export function Contact() {
         </ScrollReveal>
 
         <motion.div
+          ref={gridRef}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.08 },
-            },
-          }}
+          animate={gridInView ? "show" : "hidden"}
+          variants={container}
           className="grid gap-4 sm:grid-cols-2"
         >
           {contacts.map((contact) => {
@@ -95,10 +106,7 @@ export function Contact() {
                 href={contact.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                variants={{
-                  hidden: { opacity: 0, y: 16 },
-                  show: { opacity: 1, y: 0 },
-                }}
+                variants={contactItem}
                 className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all hover:border-nebula/50 hover:bg-white/[0.06]"
               >
                 <div className="flex items-center gap-4">

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
 import { GlassCard } from "../components/glass-card";
 import {
@@ -93,6 +94,9 @@ const item = {
 };
 
 export function Skills() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
     <section id="skills" className="relative px-6 py-24 md:px-12 md:py-32">
       <div className="mx-auto max-w-6xl">
@@ -104,10 +108,10 @@ export function Skills() {
         />
 
         <motion.div
+          ref={ref}
           variants={container}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isInView ? "show" : "hidden"}
           className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {skills.map((skill) => {

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 
 interface ScrollRevealProps {
   children: React.ReactNode;
@@ -13,12 +14,25 @@ export function ScrollReveal({
   className,
   delay = 0,
 }: ScrollRevealProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [safeVisible, setSafeVisible] = useState(false);
+
+  useEffect(() => {
+    // Fallback: if the element has been in view for a short while and the
+    // animation still hasn't taken effect, force visibility so content is never lost.
+    if (isInView) {
+      const timer = setTimeout(() => setSafeVisible(true), 800 + delay * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, delay]);
+
   return (
     <motion.div
-      className={className}
+      ref={ref}
+      className={`${className || ""} ${safeVisible ? "opacity-100 !translate-y-0" : ""}`}
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
     >
       {children}

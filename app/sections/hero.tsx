@@ -16,12 +16,38 @@ export function Hero() {
       id="#"
       className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-24 pb-16 md:px-12"
     >
+      {/* Animated ambient orbs */}
       <motion.div
         style={{ y: y1, opacity }}
         className="absolute inset-0 z-0 pointer-events-none"
       >
-        <div className="absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-nebula/10 blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-cosmos/10 blur-3xl" />
+        <motion.div
+          animate={{
+            x: [0, 30, -20, 0],
+            y: [0, -20, 30, 0],
+            scale: [1, 1.08, 1, 0.98],
+          }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[18%] left-[18%] h-[28rem] w-[28rem] rounded-full bg-nebula/20 blur-[100px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, -30, 20, 0],
+            y: [0, 30, -20, 0],
+            scale: [1, 1.05, 1, 1.02],
+          }}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[16%] right-[16%] h-[32rem] w-[32rem] rounded-full bg-cosmos/15 blur-[110px]"
+        />
+        <motion.div
+          animate={{
+            x: [0, 40, -30, 0],
+            y: [0, -40, 20, 0],
+            scale: [1, 1.12, 0.95, 1],
+          }}
+          transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[45%] left-[60%] h-64 w-64 rounded-full bg-nebula-glow/10 blur-[80px]"
+        />
       </motion.div>
 
       <div className="relative z-10 mx-auto max-w-5xl text-center">
@@ -100,14 +126,14 @@ export function Hero() {
         >
           <a
             href="#contact"
-            className="group inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-nebula px-6 text-sm font-medium text-white shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] transition-all hover:bg-nebula/90"
+            className="group inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-nebula px-6 text-sm font-medium text-white shadow-[0_0_50px_-10px_rgba(59,130,246,0.55)] transition-all hover:bg-nebula/90 hover:shadow-[0_0_60px_-8px_rgba(59,130,246,0.7)]"
           >
             <Mail className="size-4" />
             Get in touch
           </a>
           <a
             href="#work"
-            className="inline-flex h-12 items-center justify-center gap-2 rounded-full liquid-glass px-6 text-sm font-medium text-starlight transition-all hover:bg-white/[0.08]"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-full liquid-glass px-6 text-sm font-medium text-starlight transition-all hover:bg-white/[0.08] hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.25)]"
           >
             See my work
             <ArrowDown className="size-4" />
