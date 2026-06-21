@@ -69,6 +69,7 @@ const defineXcodeDarkTheme = (monaco: typeof import("monaco-editor")) => {
       "editor.hoverHighlightBackground": "264F78",
     },
   });
+  monaco.editor.setTheme("xcode-dark");
 };
 
 type DemoId = "glassCard" | "pulsingDot" | "gradientText";
@@ -254,6 +255,22 @@ export function Playground() {
 
   return (
     <section id="playground" className="relative overflow-hidden py-24 sm:py-32">
+      <style jsx global>{`
+        .monaco-editor,
+        .monaco-editor-background,
+        .monaco-editor .lines-content,
+        .monaco-editor .view-lines {
+          background-color: #1E1E1E !important;
+          color: #D4D4D4 !important;
+        }
+        .monaco-editor .margin {
+          background-color: #1E1E1E !important;
+        }
+        .monaco-editor .line-numbers {
+          color: #858585 !important;
+        }
+      `}</style>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Playground"
