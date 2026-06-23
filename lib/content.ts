@@ -254,7 +254,7 @@ export const projects: Project[] = [
     title: "Experiments & Tools",
     status: "Ongoing",
     description:
-      "Small tools, sample apps, and explorations shared on GitHub. Playgrounds for SwiftUI, concurrency patterns, and modular architecture.",
+      "Small tools, sample apps, and explorations shared on GitHub. Experiments in SwiftUI, concurrency patterns, and modular architecture.",
     longDescription:
       "My open-source work is a public lab: small SwiftUI samples, concurrency experiments, architecture templates, and tools I use to learn in the open. Not every repo is meant to be a product; some are meant to be read, forked, and challenged.",
     tags: ["Swift", "Samples", "GitHub", "SwiftUI", "Concurrency"],

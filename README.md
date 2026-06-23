@@ -11,7 +11,6 @@ A single-page portfolio built to feel like a native Apple experience on the web:
 - Deep Space color palette with Liquid Glass surfaces
 - Heavy, accessible Framer Motion animations
 - Real profile content and career history
-- Interactive SwiftUI-in-the-browser Playground demo
 - Fully responsive from mobile to desktop
 - Light, dark, and system theme support
 
@@ -27,7 +26,7 @@ A single-page portfolio built to feel like a native Apple experience on the web:
 ## Structure
 
 - `app/` — Next.js App Router pages and components
-- `app/sections/` — page sections (Hero, About, Skills, Work, Projects, Playground, Contact)
+- `app/sections/` — page sections (Hero, About, Skills, Work, Projects, Contact)
 - `app/components/` — shared components, animations, and detail layouts
 - `lib/content.ts` — source of truth for experiences and projects
 - `public/` — static assets

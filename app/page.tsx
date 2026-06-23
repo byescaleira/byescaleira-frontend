@@ -8,7 +8,6 @@ import { About } from "./sections/about";
 import { Skills } from "./sections/skills";
 import { ProfessionalWork } from "./sections/professional-work";
 import { PersonalProjects } from "./sections/personal-projects";
-import { Playground } from "./sections/playground";
 import { Contact } from "./sections/contact";
 
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
         <Skills />
         <ProfessionalWork />
         <PersonalProjects />
-        <Playground />
         <Contact />
       </main>
       <Footer />

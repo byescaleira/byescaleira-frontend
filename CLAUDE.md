@@ -48,8 +48,7 @@
 3. **Skills** — iOS/Swift/SwiftUI/Swift Concurrency, architecture, SPM, modularization, testing, CI/CD, design systems, performance, AI-augmented workflows.
 4. **Professional Work** — Globo/Cartola as main case; previous companies in compact timeline.
 5. **Personal Projects** — Prism, Orbit, Cashly, plus any open-source experiments.
-6. **Playground** — SwiftUI-in-the-browser integration using MSF/MiniSwift (tokentradez fork). If a compiled artifact is not available, provide a polished interactive demo with a clear technical explanation of the integration.
-7. **Contact / CTA** — LinkedIn and GitHub only; no email or phone in UI.
+6. **Contact / CTA** — LinkedIn and GitHub only; no email or phone in UI.
 
 ## New Requirements for This Iteration
 

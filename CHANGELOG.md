@@ -18,7 +18,7 @@
 ## [1.0.0] - Mercury - 2026-06-21
 
 ### Added
-- Initial portfolio: Hero, About, Skills, Work, Projects, Playground, Contact.
+- Initial portfolio: Hero, About, Skills, Work, Projects, Contact.
 - Deep Space / Liquid Glass visual identity.
 - Framer Motion scroll animations.
 - Responsive layout.
