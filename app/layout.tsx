@@ -77,10 +77,10 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300">
-        <ThemeProvider>
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground">
+        <ThemeProvider defaultTheme="dark" enableSystem={false}>
           {children}
         </ThemeProvider>
       </body>

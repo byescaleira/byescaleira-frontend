@@ -14,7 +14,7 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center rounded-full border border-border bg-muted p-1">
+      <div className="flex items-center border border-[#1F2937] bg-[#111827] p-1">
         <div className="size-8" />
       </div>
     );
@@ -23,12 +23,12 @@ export function ThemeToggle() {
   const current = theme === "system" ? "system" : resolvedTheme === "dark" ? "dark" : "light";
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-border bg-muted/50 p-1 backdrop-blur-md">
+    <div className="flex items-center gap-1 border border-[#1F2937] bg-[#111827] p-1">
       <button
         aria-label="Light mode"
         onClick={() => setTheme("light")}
-        className={`rounded-full p-2 transition-all ${
-          current === "light" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+        className={`p-2 transition-all ${
+          current === "light" ? "bg-[#FF6B00] text-[#0B0F19]" : "text-[#94A3B8] hover:text-[#F8FAFC]"
         }`}
       >
         <Sun className="size-4" />
@@ -36,8 +36,8 @@ export function ThemeToggle() {
       <button
         aria-label="Dark mode"
         onClick={() => setTheme("dark")}
-        className={`rounded-full p-2 transition-all ${
-          current === "dark" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+        className={`p-2 transition-all ${
+          current === "dark" ? "bg-[#FF6B00] text-[#0B0F19]" : "text-[#94A3B8] hover:text-[#F8FAFC]"
         }`}
       >
         <Moon className="size-4" />
@@ -45,8 +45,8 @@ export function ThemeToggle() {
       <button
         aria-label="System preference"
         onClick={() => setTheme("system")}
-        className={`rounded-full p-2 transition-all ${
-          theme === "system" ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+        className={`p-2 transition-all ${
+          theme === "system" ? "bg-[#FF6B00] text-[#0B0F19]" : "text-[#94A3B8] hover:text-[#F8FAFC]"
         }`}
       >
         <Monitor className="size-4" />

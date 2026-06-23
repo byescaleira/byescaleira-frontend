@@ -3,8 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
-import { GlassCard } from "../components/glass-card";
-import { OrbitPath, Constellation, OrbitNode } from "../components/space-orbits";
+import { BrutalistCard } from "../components/brutalist-card";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
@@ -33,14 +32,10 @@ export function PersonalProjects() {
   const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="projects" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-left-28 top-16 opacity-25" size={440} duration={55} color="mixed" reverse satellites={2} />
-      <OrbitPath className="-right-24 bottom-20 opacity-20" size={400} duration={45} color="orange" satellites={2} />
-      <Constellation className="left-[8%] bottom-[20%] hidden opacity-50 lg:block" count={10} />
-      <OrbitNode className="absolute right-[10%] top-[12%]" label="Orbit" active={false} color="orange" />
-      <OrbitNode className="absolute left-[12%] top-[18%]" label="Prism" active={false} color="blue" />
+    <section id="projects" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
 
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Projects"
           title="Personal work"
@@ -52,35 +47,39 @@ export function PersonalProjects() {
           variants={container}
           initial="hidden"
           animate={gridInView ? "show" : "hidden"}
-          className="grid gap-6 sm:grid-cols-2"
+          className="grid gap-4 sm:grid-cols-2"
         >
           {projects.map((project, i) => (
             <motion.div key={project.codename} variants={projectCard}>
               <Link href={project.href} className="group block h-full">
-                <GlassCard hover glow={i % 2 === 0 ? "orange" : "blue"} className="h-full">
+                <BrutalistCard
+                  hover
+                  accent={i % 2 === 0 ? "pulsar" : "nebula"}
+                  className="h-full"
+                >
                   <div className="mb-4 flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-sm font-bold text-primary">
+                      <span className="flex size-10 items-center justify-center border border-[#1F2937] bg-[#111827] text-sm font-black text-[#FF6B00]">
                         {project.codename[0]}
                       </span>
                       <div>
-                        <h3 className="font-semibold text-foreground transition-colors group-hover:text-primary">{project.title}</h3>
-                        <span className="text-xs text-muted-foreground">{project.status}</span>
+                        <h3 className="font-heading text-base font-black uppercase tracking-wide text-[#F8FAFC] transition-colors group-hover:text-[#FF6B00]">{project.title}</h3>
+                        <span className="text-xs font-mono uppercase tracking-wider text-[#64748B]">{project.status}</span>
                       </div>
                     </div>
-                    <ArrowUpRight className="size-5 text-muted-foreground transition-all group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="size-5 text-[#64748B] transition-all group-hover:text-[#FF6B00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
 
-                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+                  <p className="mb-4 text-sm leading-relaxed text-[#94A3B8]">{project.description}</p>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground">
+                      <span key={tag} className="tag-brutal">
                         {tag}
                       </span>
                     ))}
                   </div>
-                </GlassCard>
+                </BrutalistCard>
               </Link>
             </motion.div>
           ))}

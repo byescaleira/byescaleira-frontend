@@ -3,9 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { SectionHeading } from "../components/section-heading";
-import { GlassCard } from "../components/glass-card";
-import { OrbitPath, Constellation } from "../components/space-orbits";
-import { cn } from "@/lib/utils";
+import { BrutalistCard } from "../components/brutalist-card";
 
 const skills = [
   { title: "iOS / Swift / SwiftUI", description: "Deep expertise building native iOS products with Swift, SwiftUI, and UIKit." },
@@ -24,7 +22,7 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.06 },
+    transition: { staggerChildren: 0.05 },
   },
 };
 
@@ -38,12 +36,10 @@ export function Skills() {
   const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="skills" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-left-24 top-24 opacity-25" size={460} duration={55} color="blue" reverse satellites={2} />
-      <OrbitPath className="-right-20 bottom-12 opacity-20" size={380} duration={40} color="orange" satellites={2} />
-      <Constellation className="right-[8%] top-[25%] hidden opacity-50 lg:block" count={8} />
+    <section id="skills" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
 
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Capabilities"
           title="What I do best"
@@ -59,17 +55,21 @@ export function Skills() {
         >
           {skills.map((skill, i) => (
             <motion.div key={skill.title} variants={skillCard}>
-              <GlassCard hover glow={i % 3 === 0 ? "orange" : i % 3 === 1 ? "blue" : undefined} className="h-full">
+              <BrutalistCard
+                hover
+                accent={i % 3 === 0 ? "pulsar" : i % 3 === 1 ? "nebula" : "teal"}
+                className="h-full"
+              >
                 <div className="flex h-full flex-col">
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                    <span className="flex size-8 items-center justify-center border border-[#1F2937] bg-[#111827] text-xs font-black text-[#FF6B00]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-medium text-foreground">{skill.title}</h3>
+                    <h3 className="font-heading text-sm font-bold uppercase tracking-wide text-[#F8FAFC]">{skill.title}</h3>
                   </div>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
+                  <p className="text-sm leading-relaxed text-[#94A3B8]">{skill.description}</p>
                 </div>
-              </GlassCard>
+              </BrutalistCard>
             </motion.div>
           ))}
         </motion.div>

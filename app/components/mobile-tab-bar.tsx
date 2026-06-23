@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { User, Layers, Briefcase, FolderOpen, Play, MessageSquare } from "lucide-react";
+import { User, Layers, Briefcase, FolderOpen, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const tabs = [
@@ -10,7 +10,6 @@ const tabs = [
   { label: "Skills", href: "#skills", icon: Layers },
   { label: "Work", href: "#work", icon: Briefcase },
   { label: "Projects", href: "#projects", icon: FolderOpen },
-  { label: "Play", href: "#playground", icon: Play },
   { label: "Contact", href: "#contact", icon: MessageSquare },
 ];
 
@@ -37,14 +36,14 @@ export function MobileTabBar() {
 
   return (
     <nav
-      className="fixed bottom-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#1F2937] bg-[#0B0F19] md:hidden"
       aria-label="Mobile section navigation"
     >
       <motion.div
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="liquid-glass flex items-center justify-between rounded-[2rem] px-2 py-2 shadow-2xl shadow-black/30"
+        className="flex items-center justify-between px-2 py-2"
       >
         {tabs.map((tab) => {
           const Icon = tab.icon;
@@ -54,20 +53,20 @@ export function MobileTabBar() {
               key={tab.href}
               href={tab.href}
               className={cn(
-                "group relative flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 transition-colors",
-                isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                "group relative flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors",
+                isActive ? "text-[#FF6B00]" : "text-[#64748B] hover:text-[#94A3B8]"
               )}
               aria-current={isActive ? "page" : undefined}
             >
               {isActive && (
                 <motion.div
                   layoutId="mobileTabPill"
-                  className="absolute inset-0 rounded-2xl bg-primary/15"
+                  className="absolute inset-0 border border-[#FF6B00]/30 bg-[#FF6B00]/10"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}
-              <Icon className={cn("relative z-10 size-5", isActive && "text-primary")} />
-              <span className={cn("relative z-10 text-[10px] font-medium", isActive && "text-foreground")}>
+              <Icon className={cn("relative z-10 size-5")} />
+              <span className={cn("relative z-10 text-[10px] font-black uppercase tracking-wider")}>
                 {tab.label}
               </span>
             </a>

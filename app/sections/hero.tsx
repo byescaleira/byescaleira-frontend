@@ -1,95 +1,70 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "../components/icons";
-import { ScrollProgress } from "../components/scroll-progress";
-import { OrbitPath, Planet, Constellation } from "../components/space-orbits";
 
 export function Hero() {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const scale = useTransform(scrollY, [0, 400], [1, 0.95]);
-  const y = useTransform(scrollY, [0, 400], [0, 60]);
-  const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
-
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-24 pb-12 md:px-12"
+      className="relative flex min-h-screen flex-col justify-center overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 pt-24 pb-12 md:px-12"
     >
-      <ScrollProgress />
+      {/* Subtle grid background */}
+      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-70" />
 
-      {/* Central orbital system behind headline */}
-      <OrbitPath
-        className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-30"
-        size={700}
-        duration={100}
-        color="mixed"
-        thickness={1.2}
-        satellites={3}
-      />
-      <OrbitPath
-        className="-left-24 top-1/4 opacity-40 md:left-[5%]"
-        size={420}
-        duration={55}
-        color="orange"
-        reverse
-        satellites={2}
-      />
-      <OrbitPath
-        className="-right-24 top-1/3 opacity-35 md:right-[8%]"
-        size={520}
-        duration={70}
-        color="blue"
-        satellites={2}
-      />
-
-      <Constellation className="left-[8%] top-[22%] opacity-60" count={6} />
-      <Constellation className="right-[10%] bottom-[25%] opacity-50" count={8} />
-
-      <Planet className="absolute top-[16%] left-[12%]" size={10} color="orange" />
-      <Planet className="absolute top-[12%] right-[22%]" size={7} color="blue" />
-      <Planet className="absolute bottom-[30%] left-[18%]" size={6} color="muted" />
-      <Planet className="absolute bottom-[22%] right-[16%]" size={11} color="orange" />
-      <Planet className="absolute top-[42%] right-[6%] hidden md:block" size={5} color="blue" />
-      <Planet className="absolute bottom-[40%] left-[4%] hidden md:block" size={4} color="orange" />
-
+      {/* Top status bar */}
       <motion.div
-        style={{ opacity, scale, y: smoothY }}
-        className="relative z-10 max-w-4xl text-center"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="absolute top-0 left-0 right-0 hidden border-b border-[#1F2937] md:block"
       >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2 text-xs font-mono uppercase tracking-wider text-[#64748B] md:px-8">
+          <span>Campo Grande, MS / Rio de Janeiro, BR</span>
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 bg-[#14B8A6]" />
+              Available for select projects
+            </span>
+            <span>Swift / SwiftUI / AI workflows</span>
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-4 py-2 text-sm text-muted-foreground backdrop-blur-md"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-6 inline-flex items-center gap-2 border border-[#1F2937] px-3 py-1.5 text-xs font-mono uppercase tracking-wider text-[#94A3B8]"
         >
-          <span className="size-2 rounded-full bg-primary"></span>
+          <span className="h-2 w-2 bg-[#FF6B00]" />
           Currently building Cartola FC at Globo
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-heading text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="font-heading text-6xl font-black uppercase tracking-tighter text-[#F8FAFC] sm:text-7xl md:text-8xl lg:text-9xl"
         >
-          Rafael Escaleira
+          Rafael
+          <br />
+          <span className="text-[#FF6B00]">Escaleira</span>
         </motion.h1>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-6 flex flex-wrap items-center justify-center gap-3 text-lg text-muted-foreground md:text-xl"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-8 flex max-w-3xl flex-wrap items-center gap-3 text-lg text-[#94A3B8] md:text-xl"
         >
-          <span className="text-foreground">iOS Specialist.</span>
+          <span className="font-heading text-xl font-bold uppercase tracking-wide text-[#F8FAFC] md:text-2xl">
+            iOS Specialist.
+          </span>
           {["Swift", "SwiftUI", "Clean Architecture", "AI-augmented workflows"].map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-border bg-muted/40 px-3 py-1 text-sm"
-            >
+            <span key={tag} className="tag-brutal">
               {tag}
             </span>
           ))}
@@ -98,28 +73,23 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-6 max-w-2xl text-lg leading-relaxed text-[#94A3B8]"
         >
           I help teams turn mobile complexity into simple, testable, scalable software.
+          Currently leading AI adoption in engineering workflows at Globo.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-4"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-10 flex flex-wrap items-center gap-4"
         >
-          <a
-            href="#contact"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
+          <a href="#contact" className="btn-brutal">
             Get in touch
           </a>
-          <a
-            href="#work"
-            className="group inline-flex h-12 items-center gap-2 rounded-full border border-border bg-muted/40 px-6 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-          >
+          <a href="#work" className="btn-brutal-outline">
             See my work
             <ArrowDown className="size-4 transition-transform group-hover:translate-y-0.5" />
           </a>
@@ -128,8 +98,8 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="mt-10 flex items-center justify-center gap-4"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mt-12 flex items-center gap-6"
         >
           {[
             { href: "https://github.com/byescaleira", icon: GithubIcon, label: "GitHub" },
@@ -142,22 +112,23 @@ export function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="flex size-10 items-center justify-center rounded-full border border-border bg-muted/40 text-muted-foreground transition-all hover:border-primary/50 hover:text-primary"
+              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#64748B] transition-colors hover:text-[#FF6B00]"
             >
               <social.icon className="size-4" />
+              {social.label}
             </a>
           ))}
         </motion.div>
-      </motion.div>
+      </div>
 
       <motion.a
         href="#about"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.6 }}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+        transition={{ duration: 0.6, delay: 0.7 }}
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-[#64748B] transition-colors hover:text-[#FF6B00]"
       >
-        <span className="uppercase tracking-[0.2em]">Scroll</span>
+        <span>Scroll</span>
         <ArrowDown className="size-4 animate-bounce" />
       </motion.a>
     </section>

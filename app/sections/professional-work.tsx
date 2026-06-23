@@ -2,8 +2,7 @@
 
 import { SectionHeading } from "../components/section-heading";
 import { ScrollReveal } from "../components/scroll-reveal";
-import { GlassCard } from "../components/glass-card";
-import { OrbitPath, Planet, OrbitNode } from "../components/space-orbits";
+import { BrutalistCard } from "../components/brutalist-card";
 import { ArrowRight, Trophy, Zap, Users, Target } from "lucide-react";
 import Link from "next/link";
 
@@ -25,14 +24,10 @@ const tags = ["Swift", "SwiftUI", "UIKit", "Clean Architecture", "Swift Concurre
 
 export function ProfessionalWork() {
   return (
-    <section id="work" className="relative overflow-hidden px-6 py-24 md:px-12 md:py-32">
-      <OrbitPath className="-right-28 top-20 opacity-25" size={480} duration={65} color="orange" satellites={3} />
-      <OrbitPath className="-left-20 bottom-20 opacity-20" size={360} duration={50} color="mixed" reverse satellites={2} />
-      <Planet className="absolute right-[15%] top-[10%]" size={7} color="orange" />
-      <Planet className="absolute left-[12%] bottom-[30%]" size={5} color="blue" />
-      <OrbitNode className="absolute right-[8%] bottom-[25%]" label="Current" active color="orange" />
+    <section id="work" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
 
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Professional work"
           title="Globo / Cartola FC"
@@ -41,18 +36,18 @@ export function ProfessionalWork() {
 
         <div className="grid gap-8 lg:grid-cols-3">
           <ScrollReveal className="lg:col-span-2">
-            <GlassCard glow="orange" className="h-full">
+            <BrutalistCard accent="pulsar" className="h-full">
               <div className="mb-4 flex items-center gap-3">
-                <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10">
-                  <Trophy className="size-6 text-primary" />
+                <div className="flex size-12 items-center justify-center border border-[#1F2937] bg-[#111827]">
+                  <Trophy className="size-6 text-[#FF6B00]" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground">Cartola FC</h3>
-                  <p className="text-sm text-muted-foreground">Globo · iOS Specialist · Present</p>
+                  <h3 className="font-heading text-xl font-black uppercase tracking-wide text-[#F8FAFC]">Cartola FC</h3>
+                  <p className="text-sm font-mono uppercase tracking-wider text-[#64748B]">Globo · iOS Specialist · Present</p>
                 </div>
               </div>
 
-              <p className="leading-relaxed text-muted-foreground">
+              <p className="leading-relaxed text-[#94A3B8]">
                 Cartola FC is more than a game — it is a national ritual during the Brazilian football season. As an iOS Specialist at Globo, I work on the architecture, performance, and user experience of an app used by millions of fans every round. The challenge is not just shipping features; it is keeping a massive codebase healthy, fast, and ready for spikes of traffic right after each match.
               </p>
 
@@ -61,12 +56,12 @@ export function ProfessionalWork() {
                   const Icon = item.icon;
                   return (
                     <div key={item.label} className="flex items-start gap-3">
-                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                        <Icon className="size-4 text-primary" />
+                      <div className="flex size-8 shrink-0 items-center justify-center border border-[#1F2937] bg-[#111827]">
+                        <Icon className="size-4 text-[#FF6B00]" />
                       </div>
                       <div>
-                        <div className="font-medium text-foreground">{item.label}</div>
-                        <div className="text-sm text-muted-foreground">{item.description}</div>
+                        <div className="font-heading text-sm font-bold uppercase tracking-wide text-[#F8FAFC]">{item.label}</div>
+                        <div className="text-sm text-[#94A3B8]">{item.description}</div>
                       </div>
                     </div>
                   );
@@ -75,7 +70,7 @@ export function ProfessionalWork() {
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-border bg-muted/40 px-3 py-1 text-xs text-muted-foreground">
+                  <span key={tag} className="tag-brutal">
                     {tag}
                   </span>
                 ))}
@@ -84,36 +79,37 @@ export function ProfessionalWork() {
               <div className="mt-6">
                 <Link
                   href="/experience/globo"
-                  className="group inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-pulsar"
+                  className="group inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.15em] text-[#FF6B00] transition-colors hover:text-[#FF8C42]"
                 >
                   View full experience
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>
-            </GlassCard>
+            </BrutalistCard>
           </ScrollReveal>
 
           <div className="space-y-6">
             <ScrollReveal delay={0.1}>
-              <GlassCard className="h-full">
-                <h3 className="mb-4 text-lg font-semibold text-foreground">Previous roles</h3>
-                <div className="space-y-4">
+              <BrutalistCard accent="nebula" className="h-full">
+                <h3 className="mb-4 border-b border-[#1F2937] pb-3 text-sm font-black uppercase tracking-[0.2em] text-[#F8FAFC]"
+                >Previous roles</h3>
+                <div className="space-y-3">
                   {previousRoles.map((role) => (
                     <Link
                       key={role.company}
                       href={`/experience/${role.company.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="group block rounded-xl border border-border bg-muted/40 p-4 transition-colors hover:border-primary/50 hover:bg-muted"
+                      className="group block border border-[#1F2937] bg-[#0B0F19] p-4 transition-all hover:border-[#3B82F6] hover:bg-[#111827]"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-foreground transition-colors group-hover:text-primary">{role.company}</span>
-                        <ArrowRight className="size-4 text-muted-foreground transition-all group-hover:text-primary group-hover:translate-x-0.5" />
+                        <span className="font-heading text-sm font-bold uppercase tracking-wide text-[#F8FAFC] transition-colors group-hover:text-[#3B82F6]">{role.company}</span>
+                        <ArrowRight className="size-4 text-[#64748B] transition-all group-hover:text-[#3B82F6] group-hover:translate-x-0.5" />
                       </div>
-                      <div className="text-sm text-muted-foreground">{role.role}</div>
-                      <div className="mt-1 text-xs text-primary">{role.focus}</div>
+                      <div className="text-sm text-[#94A3B8]">{role.role}</div>
+                      <div className="mt-1 text-xs font-mono uppercase text-[#3B82F6]">{role.focus}</div>
                     </Link>
                   ))}
                 </div>
-              </GlassCard>
+              </BrutalistCard>
             </ScrollReveal>
           </div>
         </div>
