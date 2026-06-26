@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useScroll, useSpring } from "framer-motion";
+import { useTheme } from "next-themes";
 
 interface Star {
   x: number;
@@ -46,6 +47,9 @@ export function StarField({ count = 220 }: { count?: number }) {
     restDelta: 0.001,
   });
 
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === undefined ? true : resolvedTheme === "dark";
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -77,7 +81,7 @@ export function StarField({ count = 220 }: { count?: number }) {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Deep space nebula gradients — adapt to orange/blue palette
+      const nebulaOpacity = isDark ? 1 : 0.35;
       const nebula = ctx.createRadialGradient(
         width * 0.25,
         height * 0.25,
@@ -86,8 +90,8 @@ export function StarField({ count = 220 }: { count?: number }) {
         height * 0.25,
         width * 0.7
       );
-      nebula.addColorStop(0, "rgba(255, 107, 0, 0.16)");
-      nebula.addColorStop(0.4, "rgba(255, 107, 0, 0.05)");
+      nebula.addColorStop(0, `rgba(255, 107, 0, ${0.16 * nebulaOpacity})`);
+      nebula.addColorStop(0.4, `rgba(255, 107, 0, ${0.05 * nebulaOpacity})`);
       nebula.addColorStop(1, "transparent");
       ctx.fillStyle = nebula;
       ctx.fillRect(0, 0, width, height);
@@ -100,8 +104,8 @@ export function StarField({ count = 220 }: { count?: number }) {
         height * 0.82,
         width * 0.65
       );
-      cosmos.addColorStop(0, "rgba(59, 130, 246, 0.12)");
-      cosmos.addColorStop(0.45, "rgba(59, 130, 246, 0.04)");
+      cosmos.addColorStop(0, `rgba(59, 130, 246, ${0.12 * nebulaOpacity})`);
+      cosmos.addColorStop(0.45, `rgba(59, 130, 246, ${0.04 * nebulaOpacity})`);
       cosmos.addColorStop(1, "transparent");
       ctx.fillStyle = cosmos;
       ctx.fillRect(0, 0, width, height);
@@ -109,7 +113,7 @@ export function StarField({ count = 220 }: { count?: number }) {
       // Stars with parallax
       starsRef.current.forEach((star) => {
         const twinkle = Math.sin(elapsed * star.twinkleSpeed + star.twinkleOffset);
-        star.opacity = Math.max(0.05, star.baseOpacity + twinkle * 0.12);
+        star.opacity = Math.max(0.05, star.baseOpacity + twinkle * 0.12) * (isDark ? 1 : 0.6);
 
         const parallax = scroll * (0.03 + star.depth * 0.12);
         const y = (star.y - parallax) % height;
@@ -117,7 +121,9 @@ export function StarField({ count = 220 }: { count?: number }) {
 
         ctx.beginPath();
         ctx.arc(star.x, drawY, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(248, 250, 252, ${star.opacity})`;
+        ctx.fillStyle = isDark
+          ? `rgba(248, 250, 252, ${star.opacity})`
+          : `rgba(11, 15, 25, ${star.opacity})`;
         ctx.fill();
       });
 
@@ -130,10 +136,10 @@ export function StarField({ count = 220 }: { count?: number }) {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [count, smoothScrollY]);
+  }, [count, smoothScrollY, isDark]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden transition-opacity duration-500">
       <canvas
         ref={canvasRef}
         className="absolute inset-0"

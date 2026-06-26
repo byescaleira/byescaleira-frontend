@@ -36,7 +36,7 @@ export function MobileTabBar() {
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#1F2937] bg-[#0B0F19] md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/90 backdrop-blur-xl md:hidden"
       aria-label="Mobile section navigation"
     >
       <motion.div
@@ -54,14 +54,14 @@ export function MobileTabBar() {
               href={tab.href}
               className={cn(
                 "group relative flex flex-1 flex-col items-center justify-center gap-1 py-2 transition-colors",
-                isActive ? "text-[#FF6B00]" : "text-[#64748B] hover:text-[#94A3B8]"
+                isActive ? "text-primary" : "text-orbit hover:text-muted-foreground"
               )}
               aria-current={isActive ? "page" : undefined}
             >
               {isActive && (
                 <motion.div
                   layoutId="mobileTabPill"
-                  className="absolute inset-0 border border-[#FF6B00]/30 bg-[#FF6B00]/10"
+                  className="absolute inset-0 border border-primary/30 bg-primary/10"
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
               )}

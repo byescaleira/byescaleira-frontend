@@ -5,16 +5,17 @@
 - **Name:** byescaleira-frontend
 - **Repository:** https://github.com/byescaleira/byescaleira-frontend
 - **Live target:** Vercel (deploy via `vercel --prod` after build passes)
-- **Owner:** Rafael E. Escaleira (`byescaleira`)
+- **Owner:** Rafael Escaleira (`byescaleira`)
 - **Role:** iOS Specialist at Globo, working on Cartola FC
 
 ## Owner Profile
 
-- **Name:** Rafael E. Escaleira
+- **Name:** Rafael Escaleira
 - **Location:** Campo Grande, MS / Rio de Janeiro, Brazil
-- **LinkedIn:** linkedin.com/in/rafael-eescaleira
+- **LinkedIn:** linkedin.com/in/byescaleira
 - **GitHub:** github.com/byescaleira
-- **Public contact:** use LinkedIn or GitHub for initial contact (no email/phone in public UI)
+- **Instagram:** instagram.com/rafaelescaleira
+- **Public contact:** use LinkedIn, GitHub or Instagram for initial contact (no email/phone in public UI)
 
 ### Career
 - 7+ years building iOS and cross-platform products.

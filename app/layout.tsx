@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "Rafael Escaleira",
     "byescaleira",
   ],
-  authors: [{ name: "Rafael E. Escaleira", url: "https://byescaleira-frontend.vercel.app" }],
+  authors: [{ name: "Rafael Escaleira", url: "https://byescaleira.com" }],
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -77,10 +77,10 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
+      className={`${dmSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground">
-        <ThemeProvider defaultTheme="dark" enableSystem={false}>
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300">
+        <ThemeProvider defaultTheme="dark" enableSystem={true}>
           {children}
         </ThemeProvider>
       </body>

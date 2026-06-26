@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { GithubIcon, LinkedinIcon, XIcon } from "./icons";
+import Link from "next/link";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
 
 const navItems = [
@@ -26,24 +27,24 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b border-[#1F2937] bg-[#0B0F19] transition-all duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/95 backdrop-blur-md transition-all duration-200 ${
         scrolled ? "py-2" : "py-4"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-8">
-        <a
+        <Link
           href="/"
-          className="font-heading text-lg font-black uppercase tracking-tight text-[#F8FAFC] transition-colors hover:text-[#FF6B00]"
+          className="font-heading text-lg font-black uppercase tracking-tight text-foreground transition-colors hover:text-primary"
         >
           byescaleira
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={isHome ? item.href : `/${item.href}`}
-              className="text-xs font-bold uppercase tracking-[0.15em] text-[#94A3B8] transition-colors hover:text-[#FF6B00]"
+              className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
             </a>
@@ -55,30 +56,30 @@ export function Header() {
             href="https://github.com/byescaleira"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#94A3B8] transition-colors hover:text-[#FF6B00]"
+            className="text-muted-foreground transition-colors hover:text-primary"
             aria-label="GitHub"
           >
             <GithubIcon className="size-5" />
           </a>
           <a
-            href="https://www.linkedin.com/in/rafael-eescaleira"
+            href="https://www.linkedin.com/in/byescaleira"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#94A3B8] transition-colors hover:text-[#FF6B00]"
+            className="text-muted-foreground transition-colors hover:text-primary"
             aria-label="LinkedIn"
           >
             <LinkedinIcon className="size-5" />
           </a>
           <a
-            href="https://x.com/byescaleira"
+            href="https://www.instagram.com/rafaelescaleira"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#94A3B8] transition-colors hover:text-[#FF6B00]"
-            aria-label="X/Twitter"
+            className="text-muted-foreground transition-colors hover:text-primary"
+            aria-label="Instagram"
           >
-            <XIcon className="size-5" />
+            <InstagramIcon className="size-5" />
           </a>
-          <div className="border-l border-[#1F2937] pl-4">
+          <div className="border-l border-border pl-4">
             <ThemeToggle />
           </div>
         </div>

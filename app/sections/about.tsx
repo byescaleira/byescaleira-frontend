@@ -4,15 +4,16 @@ import { ScrollReveal } from "../components/scroll-reveal";
 import { SectionHeading } from "../components/section-heading";
 import { BrutalistCard } from "../components/brutalist-card";
 import { GraduationCap, Rocket, Target, Sparkles, Cpu } from "lucide-react";
+import Link from "next/link";
 
 const careerSteps = [
-  { company: "Globo", role: "iOS Specialist — Cartola FC", period: "Present", type: "current" },
-  { company: "Deliver IT / Letsbank", role: "iOS Developer", period: "2022 — 2023", type: "past" },
-  { company: "Next", role: "iOS Developer", period: "2021 — 2022", type: "past" },
-  { company: "TocaLivros", role: "Mobile Developer", period: "2020 — 2021", type: "past" },
-  { company: "Boviplan", role: "Mobile Developer", period: "2019 — 2020", type: "past" },
-  { company: "A.A.A. UFMS", role: "Developer", period: "2018 — 2019", type: "past" },
-  { company: "CATWORK", role: "Developer", period: "2017 — 2018", type: "past" },
+  { company: "Globo", role: "iOS Specialist — Cartola FC", period: "Present", type: "current", slug: "globo" },
+  { company: "Deliver IT / Letsbank", role: "iOS Developer", period: "2022 — 2023", type: "past", slug: "deliver-it-letsbank" },
+  { company: "Next", role: "iOS Developer", period: "2021 — 2022", type: "past", slug: "next" },
+  { company: "TocaLivros", role: "Mobile Developer", period: "2020 — 2021", type: "past", slug: "tocalivros" },
+  { company: "Boviplan", role: "Mobile Developer", period: "2019 — 2020", type: "past", slug: "boviplan" },
+  { company: "A.A.A. UFMS", role: "Developer", period: "2018 — 2019", type: "past", slug: "aaa-ufms" },
+  { company: "CATWORK", role: "Developer", period: "2017 — 2018", type: "past", slug: "catwork" },
 ];
 
 const principles = [
@@ -29,8 +30,8 @@ const education = [
 
 export function About() {
   return (
-    <section id="about" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
-      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
+    <section id="about" className="relative overflow-hidden border-b border-border bg-background px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
@@ -42,30 +43,33 @@ export function About() {
         <div className="grid gap-8 lg:grid-cols-5">
           <ScrollReveal className="lg:col-span-3">
             <BrutalistCard accent="pulsar" className="h-full">
-              <h3 className="mb-6 border-b border-[#1F2937] pb-3 text-sm font-black uppercase tracking-[0.2em] text-[#F8FAFC]">Career path</h3>
+              <h3 className="mb-6 border-b border-border pb-3 text-sm font-black uppercase tracking-[0.2em] text-foreground">Career path</h3>
               <div className="relative">
-                <div className="absolute top-0 bottom-0 left-[7px] w-px bg-[#1F2937]" />
+                <div className="absolute top-0 bottom-0 left-[7px] w-px bg-border" />
                 <div className="space-y-6">
                   {careerSteps.map((step, i) => (
                     <ScrollReveal key={step.company} delay={i * 0.05}>
-                      <div className="group relative flex items-start gap-4 pl-6">
+                      <Link
+                        href={`/experience/${step.slug}`}
+                        className="group relative flex items-start gap-4 pl-6"
+                      >
                         <div
                           className={`absolute top-1.5 left-0 size-3.5 border transition-colors ${
                             step.type === "current"
-                              ? "border-[#FF6B00] bg-[#FF6B00]"
-                              : "border-[#64748B] bg-[#0B0F19] group-hover:border-[#FF6B00]"
+                              ? "border-primary bg-primary"
+                              : "border-orbit bg-background group-hover:border-primary"
                           }`}
                         />
                         <div className="flex-1">
                           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                            <span className="font-heading text-base font-bold text-[#F8FAFC] transition-colors group-hover:text-[#FF6B00]">{step.company}</span>
+                            <span className="font-heading text-base font-bold text-foreground transition-colors group-hover:text-primary">{step.company}</span>
                             {step.period && (
-                              <span className="text-xs font-mono uppercase tracking-wider text-[#64748B]">{step.period}</span>
+                              <span className="text-xs font-mono uppercase tracking-wider text-orbit">{step.period}</span>
                             )}
                           </div>
-                          <div className="text-sm text-[#94A3B8]">{step.role}</div>
+                          <div className="text-sm text-muted-foreground">{step.role}</div>
                         </div>
-                      </div>
+                      </Link>
                     </ScrollReveal>
                   ))}
                 </div>
@@ -76,19 +80,18 @@ export function About() {
           <div className="space-y-8 lg:col-span-2">
             <ScrollReveal delay={0.1}>
               <BrutalistCard accent="nebula" className="h-full">
-                <h3 className="mb-5 flex items-center gap-2 border-b border-[#1F2937] pb-3 text-sm font-black uppercase tracking-[0.2em] text-[#F8FAFC]"
-                >
-                  <GraduationCap className="size-4 text-[#3B82F6]" />
+                <h3 className="mb-5 flex items-center gap-2 border-b border-border pb-3 text-sm font-black uppercase tracking-[0.2em] text-foreground">
+                  <GraduationCap className="size-4 text-nebula" />
                   Education
                 </h3>
                 <div className="space-y-5">
                   {education.map((edu) => (
                     <div key={edu.school}>
                       <div className="flex items-center justify-between">
-                        <span className="font-heading text-base font-bold text-[#F8FAFC]">{edu.school}</span>
-                        <span className="text-xs font-mono uppercase text-[#64748B]">{edu.period}</span>
+                        <span className="font-heading text-base font-bold text-foreground">{edu.school}</span>
+                        <span className="text-xs font-mono uppercase text-orbit">{edu.period}</span>
                       </div>
-                      <p className="text-sm text-[#94A3B8]">{edu.degree}</p>
+                      <p className="text-sm text-muted-foreground">{edu.degree}</p>
                     </div>
                   ))}
                 </div>
@@ -97,19 +100,18 @@ export function About() {
 
             <ScrollReveal delay={0.2}>
               <BrutalistCard accent="teal">
-                <h3 className="mb-5 border-b border-[#1F2937] pb-3 text-sm font-black uppercase tracking-[0.2em] text-[#F8FAFC]"
-                >Working principles</h3>
+                <h3 className="mb-5 border-b border-border pb-3 text-sm font-black uppercase tracking-[0.2em] text-foreground">Working principles</h3>
                 <div className="grid gap-4">
                   {principles.map((principle) => {
                     const Icon = principle.icon;
                     return (
                       <div key={principle.title} className="group flex gap-4">
-                        <div className="flex size-10 shrink-0 items-center justify-center border border-[#1F2937] bg-[#111827] transition-colors group-hover:border-[#FF6B00]">
-                          <Icon className="size-5 text-[#FF6B00]" />
+                        <div className="flex size-10 shrink-0 items-center justify-center border border-border bg-card transition-colors group-hover:border-primary">
+                          <Icon className="size-5 text-primary" />
                         </div>
                         <div>
-                          <h4 className="font-heading text-sm font-bold uppercase tracking-wide text-[#F8FAFC]">{principle.title}</h4>
-                          <p className="text-sm text-[#94A3B8]">{principle.description}</p>
+                          <h4 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">{principle.title}</h4>
+                          <p className="text-sm text-muted-foreground">{principle.description}</p>
                         </div>
                       </div>
                     );

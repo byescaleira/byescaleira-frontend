@@ -32,8 +32,8 @@ export function PersonalProjects() {
   const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="projects" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
-      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
+    <section id="projects" className="relative overflow-hidden border-b border-border bg-background px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
@@ -59,18 +59,18 @@ export function PersonalProjects() {
                 >
                   <div className="mb-4 flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="flex size-10 items-center justify-center border border-[#1F2937] bg-[#111827] text-sm font-black text-[#FF6B00]">
+                      <span className="flex size-10 items-center justify-center border border-border bg-card text-sm font-black text-primary">
                         {project.codename[0]}
                       </span>
                       <div>
-                        <h3 className="font-heading text-base font-black uppercase tracking-wide text-[#F8FAFC] transition-colors group-hover:text-[#FF6B00]">{project.title}</h3>
-                        <span className="text-xs font-mono uppercase tracking-wider text-[#64748B]">{project.status}</span>
+                        <h3 className="font-heading text-base font-black uppercase tracking-wide text-foreground transition-colors group-hover:text-primary">{project.title}</h3>
+                        <span className="text-xs font-mono uppercase tracking-wider text-orbit">{project.status}</span>
                       </div>
                     </div>
-                    <ArrowUpRight className="size-5 text-[#64748B] transition-all group-hover:text-[#FF6B00] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="size-5 text-orbit transition-all group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
 
-                  <p className="mb-4 text-sm leading-relaxed text-[#94A3B8]">{project.description}</p>
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
 
                   <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
                     {project.tags.map((tag) => (

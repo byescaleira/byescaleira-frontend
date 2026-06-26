@@ -36,8 +36,8 @@ export function Skills() {
   const gridInView = useInView(gridRef, { once: true, margin: "-50px" });
 
   return (
-    <section id="skills" className="relative overflow-hidden border-b border-[#1F2937] bg-[#0B0F19] px-6 py-24 md:px-12 md:py-32">
-      <div className="pointer-events-none absolute inset-0 grid-brutal opacity-50" />
+    <section id="skills" className="relative overflow-hidden border-b border-border bg-background px-6 py-24 md:px-12 md:py-32">
+      <div className="pointer-events-none absolute inset-0 grid-brutal" />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionHeading
@@ -62,12 +62,12 @@ export function Skills() {
               >
                 <div className="flex h-full flex-col">
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="flex size-8 items-center justify-center border border-[#1F2937] bg-[#111827] text-xs font-black text-[#FF6B00]">
+                    <span className="flex size-8 items-center justify-center border border-border bg-card text-xs font-black text-primary">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-heading text-sm font-bold uppercase tracking-wide text-[#F8FAFC]">{skill.title}</h3>
+                    <h3 className="font-heading text-sm font-bold uppercase tracking-wide text-foreground">{skill.title}</h3>
                   </div>
-                  <p className="text-sm leading-relaxed text-[#94A3B8]">{skill.description}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{skill.description}</p>
                 </div>
               </BrutalistCard>
             </motion.div>

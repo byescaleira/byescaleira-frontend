@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import {
   getProjectBySlug,
   getAllProjectSlugs,
-  type Project,
 } from "@/lib/content";
 import { DetailLayout } from "../../components/detail-layout";
 import { GlassCard } from "../../components/glass-card";

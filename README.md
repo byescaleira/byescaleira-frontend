@@ -26,7 +26,7 @@ A single-page portfolio built to feel like a native Apple experience on the web:
 ## Structure
 
 - `app/` — Next.js App Router pages and components
-- `app/sections/` — page sections (Hero, About, Skills, Work, Projects, Contact)
+- `app/sections/` — page sections (Hero, About, Skills, Mission Control, Work, Projects, Contact)
 - `app/components/` — shared components, animations, and detail layouts
 - `lib/content.ts` — source of truth for experiences and projects
 - `public/` — static assets
@@ -59,6 +59,6 @@ MIT © Rafael Escaleira
 
 ---
 
-Built by [Rafael Escaleira](https://byescaleira.com) · [@byescaleira](https://x.com/byescaleira)
+Built by [Rafael Escaleira](https://byescaleira.com) · [@byescaleira](https://www.instagram.com/rafaelescaleira)
 
 If something here helped you, let me know. If something is wrong, tell me louder.

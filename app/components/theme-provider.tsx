@@ -12,7 +12,7 @@ interface ThemeProviderProps {
 export function ThemeProvider({
   children,
   defaultTheme = "dark",
-  enableSystem = false,
+  enableSystem = true,
 }: ThemeProviderProps) {
   return (
     <NextThemesProvider

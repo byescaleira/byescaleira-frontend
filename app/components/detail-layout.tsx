@@ -32,10 +32,10 @@ export function DetailLayout({
       <ScrollProgress />
       <Header />
       <main className="relative z-10 flex flex-1 flex-col pb-24 pt-32 md:pb-0">
-        <section className="px-6 md:px-12">
+        <section className="bg-background px-6 md:px-12">
           <div className="mx-auto max-w-4xl">
             <motion.a
-              href="/#"
+              href="/"
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}

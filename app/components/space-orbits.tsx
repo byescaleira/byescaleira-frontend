@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useId } from "react";
 import { cn } from "@/lib/utils";
 
 interface OrbitPathProps {
@@ -28,7 +29,7 @@ export function OrbitPath({
   const rotate = useTransform(scrollY, [0, 1200], reverse ? [0, -120] : [0, 120]);
   const smoothRotate = useSpring(rotate, { stiffness: 60, damping: 30 });
 
-  const gradientId = `orbitGradient-${Math.random().toString(36).slice(2, 9)}`;
+  const gradientId = useId();
 
   return (
     <motion.div
@@ -68,7 +69,7 @@ export function OrbitPath({
           cy={size / 2}
           r={size * 0.32}
           fill="none"
-          stroke={color === "blue" ? "rgba(59,130,246,OPACITY)" : "rgba(255,107,0,OPACITY)"}
+          stroke={color === "blue" ? "rgba(59,130,246,0.5)" : "rgba(255,107,0,0.5)"}
           strokeWidth={thickness * 0.7}
           opacity={opacity * 0.7}
         />
@@ -79,7 +80,7 @@ export function OrbitPath({
           cy={size / 2}
           r={size * 0.18}
           fill="none"
-          stroke={color === "blue" ? "rgba(59,130,246,OPACITY)" : "rgba(255,107,0,OPACITY)"}
+          stroke={color === "blue" ? "rgba(59,130,246,0.35)" : "rgba(255,107,0,0.35)"}
           strokeWidth={thickness * 0.6}
           strokeDasharray={`${size * 0.01} ${size * 0.03}`}
           opacity={opacity * 0.5}
@@ -158,6 +159,12 @@ export function OrbitNode({ className, label, active = false, color = "orange" }
   );
 }
 
+// Deterministic pseudo-random helper for constellation points.
+function seededRandom(seed: number) {
+  const x = Math.sin(seed * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+}
+
 interface ConstellationProps {
   className?: string;
   count?: number;
@@ -167,11 +174,12 @@ interface ConstellationProps {
 export function Constellation({ className, count = 8, connected = true }: ConstellationProps) {
   const points = Array.from({ length: count }).map((_, i) => {
     const angle = (i / count) * Math.PI * 2;
-    const r = 70 + Math.random() * 40;
+    const r = 70 + seededRandom(i) * 40;
     return {
       x: Math.cos(angle) * r + 100,
       y: Math.sin(angle) * r + 100,
-      delay: Math.random() * 2,
+      delay: seededRandom(i + 100) * 2,
+      duration: 3 + seededRandom(i + 200) * 2,
     };
   });
 
@@ -211,7 +219,7 @@ export function Constellation({ className, count = 8, connected = true }: Conste
           fill="rgba(255,107,0,0.8)"
           animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.4, 1] }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: p.duration,
             repeat: Infinity,
             ease: "easeInOut",
             delay: p.delay,
@@ -247,7 +255,7 @@ export function Planet({ className, size = 12, color = "orange", glow = true }: 
         boxShadow: glow ? `0 0 ${size * 1.8}px ${size * 0.6}px ${fill}66` : undefined,
       }}
       animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
-      transition={{ duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: 4 + (size % 7) * 0.5, repeat: Infinity, ease: "easeInOut" }}
       aria-hidden="true"
     />
   );

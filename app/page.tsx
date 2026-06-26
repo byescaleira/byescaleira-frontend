@@ -6,6 +6,7 @@ import { MobileTabBar } from "./components/mobile-tab-bar";
 import { Hero } from "./sections/hero";
 import { About } from "./sections/about";
 import { Skills } from "./sections/skills";
+import { MissionControl } from "./sections/mission-control";
 import { ProfessionalWork } from "./sections/professional-work";
 import { PersonalProjects } from "./sections/personal-projects";
 import { Contact } from "./sections/contact";
@@ -20,6 +21,7 @@ export default function Home() {
         <Hero />
         <About />
         <Skills />
+        <MissionControl />
         <ProfessionalWork />
         <PersonalProjects />
         <Contact />

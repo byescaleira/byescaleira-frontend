@@ -21,7 +21,7 @@ export function GlassCard({
       className={cn(
         "group relative overflow-hidden rounded-2xl p-6 transition-all duration-300",
         "liquid-glass",
-        hover && "hover:bg-muted/50 hover:shadow-[0_0_40px_-12px_var(--pulsar)]",
+        hover && "hover:bg-muted/50 hover:shadow-[0_0_40px_-12px_rgba(255,107,0,0.35)]",
         glow === "blue" && "glow-blue",
         glow === "amber" && "glow-amber",
         glow === "teal" && "glow-teal",

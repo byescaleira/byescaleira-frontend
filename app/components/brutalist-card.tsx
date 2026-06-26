@@ -17,18 +17,18 @@ export function BrutalistCard({
   accent = "none",
 }: BrutalistCardProps) {
   const accentClass = {
-    pulsar: "hover:border-[#FF6B00]",
-    nebula: "hover:border-[#3B82F6]",
-    teal: "hover:border-[#14B8A6]",
-    none: "hover:border-[#374151]",
+    pulsar: "hover:border-primary",
+    nebula: "hover:border-nebula",
+    teal: "hover:border-teal",
+    none: "hover:border-muted-foreground/30",
   }[accent];
 
   return (
     <motion.div
       className={cn(
-        "group relative overflow-hidden border border-[#1F2937] bg-[#0B0F19] p-5 transition-all duration-300",
+        "group relative overflow-hidden border border-border bg-background p-5 transition-all duration-300",
         hover && accentClass,
-        hover && "hover:bg-[#111827]",
+        hover && "hover:bg-card",
         className
       )}
       whileHover={hover ? { y: -2 } : undefined}
